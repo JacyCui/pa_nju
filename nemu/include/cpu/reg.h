@@ -9,9 +9,9 @@ typedef struct
 	// general purpose registers
 	struct
 	{
-		struct
+		union
 		{
-			struct
+			union
 			{
 				uint32_t _32;
 				uint16_t _16;
