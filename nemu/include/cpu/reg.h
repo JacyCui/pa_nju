@@ -7,7 +7,7 @@
 typedef struct
 {
 	// general purpose registers
-	struct
+	union
 	{
 		union
 		{
