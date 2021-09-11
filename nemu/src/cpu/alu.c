@@ -102,7 +102,7 @@ uint32_t alu_sbb(uint32_t src, uint32_t dest, size_t data_size)
 	    return res;
     }
     */
-    return alu_sub(src, dest, data_size) - cf;
+    return alu_sub(cf, alu_sub(src, dest, data_size), data_size);
 #endif
 }
 
