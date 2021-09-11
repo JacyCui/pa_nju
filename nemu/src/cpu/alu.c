@@ -1,16 +1,60 @@
 #include "cpu/cpu.h"
 
+
+void set_CF_add(uint32_t result, uint32_t src, size_t data_size)
+{
+    result = sign_ext(resize(result, data_size), data_size);
+    src = sign_ext(resize(src, data_size), data_size);
+    cpu.eflags.CF = result < src;
+}
+
+void set_ZF(uint32_t result, size_t data_size)
+{
+    result = resize(result, data_size);
+    cpu.eflags.ZF = result == 0;
+}
+
+void set_SF(uint32_t result, size_t data_size)
+{
+    result = sign_ext(resize(result, data_size), data_size);
+    cpu.eflags.SF = sign(result);
+}
+
+void set_PF(uint32_t result)
+{
+    uint8_t low_eight = (uint8_t)result;
+    int ones = 0;
+    for (int i = 0; i < 8; i++) 
+    {
+        if (result % 2 == 1) 
+            ones += 1;
+        result = result >> 1;
+    }
+    cpu.eflags.PF = ones % 2 == 0;
+}
+
+void set_OF_add(uint32_t result, uint32_t src, uint32_t dest, size_t data_size)
+{
+    result = sign_ext(resize(result, data_size), data_size);
+    src = sign_ext(resize(src, data_size), data_size);
+    dest = sign_ext(resize(src, data_size), data_size);
+    cpu.eflags.OF = sign(src) == sign(dest) && sign(src) != sign(result);
+}
+
 uint32_t alu_add(uint32_t src, uint32_t dest, size_t data_size)
 {
 #ifdef NEMU_REF_ALU
 	return __ref_alu_add(src, dest, data_size);
 #else
 	uint32_t res = 0;
-	res = dest + src; //获取计算结果
-	
-	
-	
-	return res & (0xFFFFFFFF >> (32 - data_size));
+	res = dest + src; // Calculate the Result
+	// set flags
+	set_PF(res);
+	set_CF_add(res, src, data_size);
+	set_ZF(res, data_size);
+	set_SF(res, data_size);
+	set_OF_add(res, src, dest, data_size);
+	return resize(res, data_size);
 #endif
 }
 
