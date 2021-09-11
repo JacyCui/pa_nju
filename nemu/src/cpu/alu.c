@@ -1,5 +1,14 @@
 #include "cpu/cpu.h"
 
+void set_flags(uint32_t result, uint32_t src, uint32_t dest, size_t data_size, Operation op)
+{
+    set_PF(res);
+	set_CF(res, src, dest, data_size, op);
+	set_ZF(res, data_size);
+	set_SF(res, data_size);
+	set_OF(res, src, dest, data_size, op);
+}
+
 void set_CF(uint32_t result, uint32_t src, uint32_t dest, size_t data_size, Operation op)
 {
     result = sign_ext(resize(result, data_size), data_size);
@@ -9,6 +18,7 @@ void set_CF(uint32_t result, uint32_t src, uint32_t dest, size_t data_size, Oper
     {
         case ADC: cpu.eflags.CF = result < src || (cpu.eflags.CF && result == src); break;
         case SBB: cpu.eflags.CF = result > dest || (cpu.eflags.CF && result == dest); break; 
+        case AND: cpu.eflags.CF = 0; break;
         default: break;
     }
 }
@@ -21,7 +31,8 @@ void set_OF(uint32_t result, uint32_t src, uint32_t dest, size_t data_size, Oper
     switch (op) 
     {
         case ADC: cpu.eflags.OF = (sign(src) == sign(dest)) && (sign(src) != sign(result)); break;
-        case SBB: cpu.eflags.OF = (sign(src) != sign(dest)) && (sign(dest) != sign(result)); break; 
+        case SBB: cpu.eflags.OF = (sign(src) != sign(dest)) && (sign(dest) != sign(result)); break;
+        case AND: cpu.eflags.CF = 0; break;
         default: break;
     }
 }
@@ -66,12 +77,7 @@ uint32_t alu_adc(uint32_t src, uint32_t dest, size_t data_size)
 	return __ref_alu_adc(src, dest, data_size);
 #else
 	uint32_t res = dest + src + cpu.eflags.CF; // Calculate the Result
-	// set flags
-	set_PF(res);
-	set_CF(res, src, dest, data_size, ADC);
-	set_ZF(res, data_size);
-	set_SF(res, data_size);
-	set_OF(res, src, dest, data_size, ADC);
+	set_flags(res, src, dest, data_size, ADC); // set flags
 	return resize(res, data_size);
 #endif
 }
@@ -92,12 +98,7 @@ uint32_t alu_sbb(uint32_t src, uint32_t dest, size_t data_size)
 	return __ref_alu_sbb(src, dest, data_size);
 #else
     uint32_t res = dest - src - cpu.eflags.CF; // Calculate the Result
-	// set flags
-	set_PF(res);
-	set_CF(res, src, dest, data_size, SBB);
-	set_ZF(res, data_size);
-	set_SF(res, data_size);
-	set_OF(res, src, dest, data_size, SBB);
+	set_flags(res, src, dest, data_size, SBB); // set flags
 	return resize(res, data_size);
 #endif
 }
@@ -181,10 +182,9 @@ uint32_t alu_and(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_and(src, dest, data_size);
 #else
-	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
-	fflush(stdout);
-	assert(0);
-	return 0;
+    uint32_t res = dest & src; // Calculate the Result
+	set_flags(res, src, dest, data_size, AND); // set flags
+	return resize(res, data_size);
 #endif
 }
 
