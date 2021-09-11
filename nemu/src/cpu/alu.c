@@ -7,7 +7,7 @@ void set_CF(uint32_t result, uint32_t src, size_t data_size, Operation op)
     if (op == ADD)
         cpu.eflags.CF = result < src;
     else if (op == ADC)
-        cpu.eflags.CF = result < src || cpu.eflags.CF == 1 && result == src;
+        cpu.eflags.CF = result < src || (cpu.eflags.CF && result == src);
 }
 
 void set_ZF(uint32_t result, size_t data_size)
