@@ -88,8 +88,8 @@ uint32_t alu_sbb(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_sbb(src, dest, data_size);
 #else
-    uint32_t cf = cpu.eflags.CF;
-	return alu_sub(src, dest, data_size) - cf;
+    src = alu_adc(src, 0, data_size);
+	return alu_sub(src, dest, data_size);
 #endif
 }
 
