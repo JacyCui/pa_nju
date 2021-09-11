@@ -97,18 +97,10 @@ uint32_t alu_sub(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_sub(src, dest, data_size);
 #else
-    printf("dest = %X, src = %X, ", dest, src);
     src = ~src;
-    printf("-src = %X, ", src);
-	uint32_t res = dest + src + 1; // Calculate the Result
-	printf("res = %X\n", res);
-	// set flags
-	set_PF(res);
-	set_CF(res, src, dest, data_size, SUB);
-	set_ZF(res, data_size);
-	set_SF(res, data_size);
-	set_OF(res, src, dest, data_size, SUB);
-	return resize(res, data_size);
+    cpu.eflags.CF = 1;
+	uint32_t res = alu_adc(src, dest, data_size);
+	cpu.eflags.CF = !cpu.eflags.CF;
 #endif
 }
 
