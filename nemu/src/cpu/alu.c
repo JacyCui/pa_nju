@@ -4,6 +4,7 @@ void set_CF(uint32_t result, uint32_t src, uint32_t dest, size_t data_size, Oper
 {
     result = sign_ext(resize(result, data_size), data_size);
     src = sign_ext(resize(src, data_size), data_size);
+    dest = sign_ext(resize(dest, data_size), data_size);
     switch (op)
     {
         case ADD:
@@ -11,7 +12,7 @@ void set_CF(uint32_t result, uint32_t src, uint32_t dest, size_t data_size, Oper
         case ADC:
             cpu.eflags.CF = result < src || (cpu.eflags.CF && result == src); break;
         case SUB:
-            cpu.eflags.CF = result >= -src; break;
+            cpu.eflags.CF = dest < src; break;
         default:
             break;
     }
