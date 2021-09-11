@@ -81,11 +81,8 @@ uint32_t alu_sub(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_sub(src, dest, data_size);
 #else
-    src = ~src;
-    cpu.eflags.CF = 1;
-	uint32_t res = alu_adc(src, dest, data_size);
-	cpu.eflags.CF = !cpu.eflags.CF;
-	return res;
+    cpu.eflags.CF = 0;
+	return alu_sbb(src, dest, data_size);
 #endif
 }
 
