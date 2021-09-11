@@ -1,11 +1,13 @@
 #include "cpu/cpu.h"
 
-void set_CF(uint32_t result, uint32_t src, size_t data_size, enum Operation op)
+void set_CF(uint32_t result, uint32_t src, size_t data_size, Operation op)
 {
     result = sign_ext(resize(result, data_size), data_size);
     src = sign_ext(resize(src, data_size), data_size);
     if (op == ADD)
         cpu.eflags.CF = result < src;
+    else if (op == ADC)
+        cpu.eflags.CF = result < src || cpu.eflags.CF == 1 && result == src;
 }
 
 void set_ZF(uint32_t result, size_t data_size)
@@ -61,10 +63,14 @@ uint32_t alu_adc(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_adc(src, dest, data_size);
 #else
-	if (cpu.eflags.CF)
-	    return 0;
-	else
-	    return alu_add(src, dest, data_size);
+	uint32_t res = dest + src + cpu.eflags.CF; // Calculate the Result
+	// set flags
+	set_PF(res);
+	set_CF(res, src, data_size, ADC);
+	set_ZF(res, data_size);
+	set_SF(res, data_size);
+	set_OF_add(res, src, dest, data_size);
+	return resize(res, data_size);
 #endif
 }
 
