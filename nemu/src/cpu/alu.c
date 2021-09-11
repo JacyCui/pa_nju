@@ -217,7 +217,7 @@ uint32_t alu_shl(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_shl(src, dest, data_size);
 #else
-	uint32_t res = dest << src; // Calculate the Result
+	uint32_t res = resize(dest, data_size) << src; // Calculate the Result
 	set_flags(res, src, dest, data_size, SHL); // set flags
 	return resize(res, data_size);
 #endif
@@ -229,10 +229,7 @@ uint32_t alu_shr(uint32_t src, uint32_t dest, size_t data_size)
 	return __ref_alu_shr(src, dest, data_size);
 #else
 	uint32_t res = resize(dest, data_size) >> src; // Calculate the Result
-	//uint32_t ref_res = __ref_alu_shr(src, dest, data_size);
-	//bool cf = cpu.eflags.CF;
 	set_flags(res, src, dest, data_size, SHR); // set flags
-	//printf("dest = %x, src = %d, data_size = %d, res = %x, ref = %x, cf = %x, ref_cf = %x\n", dest, src, data_size, res, ref_res, cf, cpu.eflags.CF);
 	return resize(res, data_size);
 #endif
 }
@@ -254,9 +251,6 @@ uint32_t alu_sal(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_sal(src, dest, data_size);
 #else
-	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
-	fflush(stdout);
-	assert(0);
-	return 0;
+	return alu_shl(src, dest, data_size);
 #endif
 }
