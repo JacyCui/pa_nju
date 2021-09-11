@@ -6,7 +6,7 @@ void set_CF(uint32_t result, uint32_t src, uint32_t dest, size_t data_size, Oper
     src = sign_ext(resize(src, data_size), data_size);
     dest = sign_ext(resize(dest, data_size), data_size);
     
-    cpu.eflags.CF = result < src || (cpu.eflags.CF && result == src);
+    cpu.eflags.CF = result < src + cpu.eflags.CF;//result < src || (cpu.eflags.CF && result == src);
 }
 
 void set_OF(uint32_t result, uint32_t src, uint32_t dest, size_t data_size, Operation op)
