@@ -89,12 +89,12 @@ uint32_t alu_sbb(uint32_t src, uint32_t dest, size_t data_size)
 	return __ref_alu_sbb(src, dest, data_size);
 #else
     src = alu_adc(src, 0, data_size);
-    bool cf = cpu.eflags.CF;//, of = cpu.eflags.OF;
+    bool cf = cpu.eflags.CF, of = cpu.eflags.OF;
     //printf("dest = %X, src = %X, OF = %X, ", dest, src, cpu.eflags.OF);
 	uint32_t res = alu_sub(src, dest, data_size);
 	//printf("OF' = %X\n", cpu.eflags.OF);
 	cpu.eflags.CF = cf || cpu.eflags.CF;
-	//cpu.eflags.OF = of || cpu.eflags.OF;
+	cpu.eflags.OF = of || cpu.eflags.OF;
 	return res;
 #endif
 }
