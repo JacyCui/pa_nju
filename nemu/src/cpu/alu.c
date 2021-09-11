@@ -88,7 +88,7 @@ uint32_t alu_sbb(uint32_t src, uint32_t dest, size_t data_size)
 #else
     src = alu_adc(src, 0, data_size);
     bool cf = cpu.eflags.CF;
-    uint32_t res = alu_add(-src, dest, data_size);
+    uint32_t res = alu_sub(src, dest, data_size);
     cpu.eflags.CF = cf || cpu.eflags.CF;
     return res;
 #endif
