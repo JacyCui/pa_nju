@@ -7,7 +7,7 @@
 // Clear higner bits
 # define resize(result, data_size) ((result) & (0xFFFFFFFF >> (32 - (data_size))))
 
-typedef enum {ADD, ADC, SUB} Operation;
+typedef enum {ADC, SBB} Operation;
 void set_CF(uint32_t result, uint32_t src, uint32_t dest, size_t data_size, Operation op);
 void set_OF(uint32_t result, uint32_t src, uint32_t dest, size_t data_size, Operation op);
 

@@ -5,8 +5,12 @@ void set_CF(uint32_t result, uint32_t src, uint32_t dest, size_t data_size, Oper
     result = sign_ext(resize(result, data_size), data_size);
     src = sign_ext(resize(src, data_size), data_size);
     dest = sign_ext(resize(dest, data_size), data_size);
-    
-    cpu.eflags.CF = result < src || (cpu.eflags.CF && result == src);
+    switch (op) 
+    {
+        case ADC: cpu.eflags.CF = result < src || (cpu.eflags.CF && result == src); break;
+        case SBB: cpu.eflags.CF = result > dest || (cpu.eflags.CF && result == dest); break; 
+        default: break;
+    }
 }
 
 void set_OF(uint32_t result, uint32_t src, uint32_t dest, size_t data_size, Operation op)
@@ -14,8 +18,12 @@ void set_OF(uint32_t result, uint32_t src, uint32_t dest, size_t data_size, Oper
     result = sign_ext(resize(result, data_size), data_size);
     src = sign_ext(resize(src, data_size), data_size);
     dest = sign_ext(resize(dest, data_size), data_size);
-    
-    cpu.eflags.OF = (sign(src) == sign(dest)) && (sign(src) != sign(result));
+    switch (op) 
+    {
+        case ADC: cpu.eflags.OF = (sign(src) == sign(dest)) && (sign(src) != sign(result)); break;
+        case SBB: cpu.eflags.OF = (sign(src) != sign(dest)) && (sign(dest) != sign(result)); break; 
+        default: break;
+    }
 }
 
 void set_ZF(uint32_t result, size_t data_size)
@@ -86,12 +94,14 @@ uint32_t alu_sbb(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_sbb(src, dest, data_size);
 #else
-    uint32_t cf = cpu.eflags.CF;
-    src = ~src;
-    cpu.eflags.CF = 1;
-    uint32_t res = alu_adc(src, dest - cf, data_size);
-    cpu.eflags.CF = !cpu.eflags.CF;
-    return res;
+    uint32_t res = dest - src - cpu.eflags.CF; // Calculate the Result
+	// set flags
+	set_PF(res);
+	set_CF(res, src, dest, data_size, SBB);
+	set_ZF(res, data_size);
+	set_SF(res, data_size);
+	set_OF(res, src, dest, data_size, SBB);
+	return resize(res, data_size);
 #endif
 }
 
