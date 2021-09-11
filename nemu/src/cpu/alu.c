@@ -90,7 +90,7 @@ uint32_t alu_sbb(uint32_t src, uint32_t dest, size_t data_size)
 #else
     printf("dest = %X, src = %X, CF = %X, ", dest, src, cpu.eflags.CF);
 	uint32_t res = alu_sub(src + cpu.eflags.CF, dest, data_size);
-	printf("CF' = %X", cpu.eflags.CF);
+	printf("CF' = %X\n", cpu.eflags.CF);
 	return res;
 #endif
 }
