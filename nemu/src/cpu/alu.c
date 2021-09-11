@@ -22,7 +22,6 @@ void set_SF(uint32_t result, size_t data_size)
 
 void set_PF(uint32_t result)
 {
-    uint8_t low_eight = (uint8_t)result;
     int ones = 0;
     for (int i = 0; i < 8; i++) 
     {
