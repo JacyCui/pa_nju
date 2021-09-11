@@ -18,7 +18,7 @@ void set_CF(uint32_t result, uint32_t src, uint32_t dest, size_t data_size, Oper
     {
         case ADC: cpu.eflags.CF = result < src || (cpu.eflags.CF && result == src); break;
         case SBB: cpu.eflags.CF = result > dest || (cpu.eflags.CF && result == dest); break; 
-        case AND: cpu.eflags.CF = 0; break;
+        case AND: case OR: case XOR: cpu.eflags.CF = 0; break;
         default: break;
     }
 }
@@ -32,7 +32,7 @@ void set_OF(uint32_t result, uint32_t src, uint32_t dest, size_t data_size, Oper
     {
         case ADC: cpu.eflags.OF = (sign(src) == sign(dest)) && (sign(src) != sign(result)); break;
         case SBB: cpu.eflags.OF = (sign(src) != sign(dest)) && (sign(dest) != sign(result)); break;
-        case AND: cpu.eflags.CF = 0; break;
+        case AND: case OR: case XOR: cpu.eflags.CF = 0; break;
         default: break;
     }
 }
@@ -193,10 +193,9 @@ uint32_t alu_xor(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_xor(src, dest, data_size);
 #else
-	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
-	fflush(stdout);
-	assert(0);
-	return 0;
+	uint32_t res = dest ^ src; // Calculate the Result
+	set_flags(res, src, dest, data_size, XOR); // set flags
+	return resize(res, data_size);
 #endif
 }
 
@@ -205,10 +204,9 @@ uint32_t alu_or(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_or(src, dest, data_size);
 #else
-	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
-	fflush(stdout);
-	assert(0);
-	return 0;
+	uint32_t res = dest | src; // Calculate the Result
+	set_flags(res, src, dest, data_size, OR); // set flags
+	return resize(res, data_size);
 #endif
 }
 
