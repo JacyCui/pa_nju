@@ -36,7 +36,7 @@ void set_OF_add(uint32_t result, uint32_t src, uint32_t dest, size_t data_size)
 {
     result = sign_ext(resize(result, data_size), data_size);
     src = sign_ext(resize(src, data_size), data_size);
-    dest = sign_ext(resize(src, data_size), data_size);
+    dest = sign_ext(resize(dest, data_size), data_size);
     cpu.eflags.OF = (sign(src) == sign(dest)) && (sign(src) != sign(result));
 }
 
