@@ -49,16 +49,6 @@ uint32_t alu_add(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_add(src, dest, data_size);
 #else
-    /*
-	uint32_t res = dest + src; // Calculate the Result
-	// set flags
-	set_PF(res);
-	set_CF(res, src, dest, data_size, ADD);
-	set_ZF(res, data_size);
-	set_SF(res, data_size);
-	set_OF(res, src, dest, data_size, ADD);
-	return resize(res, data_size);
-	*/
 	cpu.eflags.CF = 0;
 	return alu_adc(src, dest, data_size);
 #endif
@@ -98,10 +88,7 @@ uint32_t alu_sbb(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_sbb(src, dest, data_size);
 #else
-	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
-	fflush(stdout);
-	assert(0);
-	return 0;
+	return alu_sub(src + cpu.eflags.CF, dest, data_size);
 #endif
 }
 
