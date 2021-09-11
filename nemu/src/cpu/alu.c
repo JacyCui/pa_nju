@@ -20,7 +20,7 @@ void set_CF(uint32_t result, uint32_t src, uint32_t dest, size_t data_size, Oper
         case SBB: cpu.eflags.CF = result > dest || (cpu.eflags.CF && result == dest); break; 
         case AND: case OR: case XOR: cpu.eflags.CF = 0; break;
         case SHL: cpu.eflags.CF = (dest >> (data_size - src)) % 2; break;
-        case SHR: cpu.eflags.CF = (dest >> (data_size - 1)) % 2; break;
+        case SHR: cpu.eflags.CF = (dest >> (src - 1)) % 2; break;
         default: break;
     }
 }
@@ -217,7 +217,7 @@ uint32_t alu_shl(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_shl(src, dest, data_size);
 #else
-	uint32_t res = (uint32_t)dest << src; // Calculate the Result
+	uint32_t res = dest << src; // Calculate the Result
 	set_flags(res, src, dest, data_size, SHL); // set flags
 	return resize(res, data_size);
 #endif
@@ -228,12 +228,11 @@ uint32_t alu_shr(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_shr(src, dest, data_size);
 #else
-    dest = resize(dest, data_size);
-	uint32_t res = (uint32_t)dest >> src; // Calculate the Result
-	uint32_t ref_res = __ref_alu_shr(src, dest, data_size);
-	bool cf = cpu.eflags.CF;
+	uint32_t res = resize(dest, data_size) >> src; // Calculate the Result
+	//uint32_t ref_res = __ref_alu_shr(src, dest, data_size);
+	//bool cf = cpu.eflags.CF;
 	set_flags(res, src, dest, data_size, SHR); // set flags
-	printf("dest = %x, src = %d, data_size = %d, res = %x, ref = %x, cf = %x, ref_cf = %x\n", dest, src, data_size, res, ref_res, cf, cpu.eflags.CF);
+	//printf("dest = %x, src = %d, data_size = %d, res = %x, ref = %x, cf = %x, ref_cf = %x\n", dest, src, data_size, res, ref_res, cf, cpu.eflags.CF);
 	return resize(res, data_size);
 #endif
 }
