@@ -39,6 +39,30 @@ void set_OF(uint32_t result, uint32_t src, uint32_t dest, size_t data_size, Oper
     }
 }
 
+void set_ZF(uint32_t result, size_t data_size)
+{
+    result = resize(result, data_size);
+    cpu.eflags.ZF = result == 0;
+}
+
+void set_SF(uint32_t result, size_t data_size)
+{
+    result = sign_ext(resize(result, data_size), data_size);
+    cpu.eflags.SF = sign(result);
+}
+
+void set_PF(uint32_t result)
+{
+    int ones = 0;
+    for (int i = 0; i < 8; i++) 
+    {
+        if (result % 2 == 1) 
+            ones += 1;
+        result = result >> 1;
+    }
+    cpu.eflags.PF = ones % 2 == 0;
+}
+
 uint32_t alu_add(uint32_t src, uint32_t dest, size_t data_size)
 {
 #ifdef NEMU_REF_ALU
