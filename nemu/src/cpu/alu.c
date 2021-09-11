@@ -233,7 +233,7 @@ uint32_t alu_shr(uint32_t src, uint32_t dest, size_t data_size)
 	uint32_t ref_res = __ref_alu_shr(src, dest, data_size);
 	bool cf = cpu.eflags.CF;
 	set_flags(res, src, dest, data_size, SHR); // set flags
-	printf("dest = %x, src = %d, data_size = %d, res = %x, ref = %x, cf = x%, ref_cf = x%\n", dest, src, data_size, res, ref_res, cf, cpu.eflags.CF);
+	printf("dest = %x, src = %d, data_size = %d, res = %x, ref = %x, cf = %x, ref_cf = %x\n", dest, src, data_size, res, ref_res, cf, cpu.eflags.CF);
 	return resize(res, data_size);
 #endif
 }
