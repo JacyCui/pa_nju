@@ -101,7 +101,7 @@ uint32_t alu_sub(uint32_t src, uint32_t dest, size_t data_size)
     src = -src;
     printf("-src = %X, ", src);
 	uint32_t res = dest + src; // Calculate the Result
-	printf("res = %X", res);
+	printf("res = %X\n", res);
 	// set flags
 	set_PF(res);
 	set_CF(res, src, dest, data_size, SUB);
