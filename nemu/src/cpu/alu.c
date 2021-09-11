@@ -1,6 +1,6 @@
 #include "cpu/cpu.h"
 
-void set_CF(uint32_t result, uint32_t src, size_t data_size, Operation op)
+void set_CF(uint32_t result, uint32_t src, size_t data_size, enum Operation op)
 {
     result = sign_ext(resize(result, data_size), data_size);
     src = sign_ext(resize(src, data_size), data_size);
