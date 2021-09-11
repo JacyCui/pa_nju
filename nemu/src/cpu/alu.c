@@ -111,7 +111,7 @@ uint64_t alu_mul(uint32_t src, uint32_t dest, size_t data_size)
 	return __ref_alu_mul(src, dest, data_size);
 #else
 	uint64_t res = src * dest;
-	return res;
+	return resize(res, data_size);
 #endif
 }
 
