@@ -216,9 +216,9 @@ uint32_t alu_shl(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_shl(src, dest, data_size);
 #else
-	uint32_t res = dest << src; // Calculate the Result
+	uint32_t res = (uint32_t)dest << src; // Calculate the Result
 	set_flags(res, src, dest, data_size, SHL); // set flags
-	return res;
+	return resize(res);
 #endif
 }
 
