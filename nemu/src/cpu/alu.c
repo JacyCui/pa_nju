@@ -20,7 +20,7 @@ void set_CF(uint32_t result, uint32_t src, uint32_t dest, size_t data_size, Oper
         case SBB: cpu.eflags.CF = result > dest || (cpu.eflags.CF && result == dest); break; 
         case AND: case OR: case XOR: cpu.eflags.CF = 0; break;
         case SHL: cpu.eflags.CF = (dest >> (data_size - src)) % 2; break;
-        case SHR: cpu.eflags.CF = (dest >> (src - 1)) % 2; break;
+        case SHR: case SAR: cpu.eflags.CF = (dest >> (src - 1)) % 2; break;
         default: break;
     }
 }
@@ -110,9 +110,7 @@ uint64_t alu_mul(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_mul(src, dest, data_size);
 #else
-	printf("\e[0;31mhwhwhwPlease implement me at alu.c\e[0m\n");
-	fflush(stdout);
-	assert(0);
+	
 	return 0;
 #endif
 }
@@ -239,11 +237,8 @@ uint32_t alu_sar(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_sar(src, dest, data_size);
 #else
-    //uint32_t res = (int32_t)dest >> src; // Calculate the Result
 	uint32_t res = (int32_t)sign_ext(dest, data_size) >> src; // Calculate the Result
-	//uint32_t ref = __ref_alu_sar(src, dest, data_size);
-	//printf("dest = %x, src = %d, expect %x, but got %x\n", dest, src, ref, resize(res, data_size));
-	set_flags(res, src, dest, data_size, SHR); // set flags
+	set_flags(res, src, dest, data_size, SAR); // set flags
 	return resize(res, data_size);
 #endif
 }
