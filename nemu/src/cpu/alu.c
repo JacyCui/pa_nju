@@ -91,7 +91,7 @@ uint32_t alu_sbb(uint32_t src, uint32_t dest, size_t data_size)
     if (cpu.eflags.CF)
     {
         printf("dest = %X, src = %X, CF = %X,  ", dest, src, cpu.eflags.CF);
-        src = alu_adc(src, 0, data_size);
+        src = alu_add(src, 1, data_size);
         bool cf = cpu.eflags.CF;
         printf("CF1 = %X, OF1 = %X,  ",  cpu.eflags.CF, cpu.eflags.OF);
 	    uint32_t res = alu_sub(src, dest, data_size);
