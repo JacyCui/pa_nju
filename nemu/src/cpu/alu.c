@@ -93,9 +93,10 @@ uint32_t alu_sbb(uint32_t src, uint32_t dest, size_t data_size)
         printf("dest = %X, src = %X, CF = %X,  ", dest, src, cpu.eflags.CF);
         src = alu_adc(src, 0, data_size);
         bool cf = cpu.eflags.CF;
+        printf("dest = %X, CF1 = %X, OF1 = %X,  ",  cpu.eflags.CF, cpu.eflags.OF);
 	    uint32_t res = alu_sub(src, dest, data_size);
 	    cpu.eflags.CF = cf || cpu.eflags.CF;
-	    printf("CF' = %X, OF = %X\n", cpu.eflags.CF, cpu.eflags.OF);
+	    printf("CF2 = %X, OF2 = %X\n", cpu.eflags.CF, cpu.eflags.OF);
 	    return res;
     }
     return alu_sub(src, dest, data_size);
