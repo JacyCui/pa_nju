@@ -101,6 +101,7 @@ uint32_t alu_sub(uint32_t src, uint32_t dest, size_t data_size)
     cpu.eflags.CF = 1;
 	uint32_t res = alu_adc(src, dest, data_size);
 	cpu.eflags.CF = !cpu.eflags.CF;
+	return res;
 #endif
 }
 
