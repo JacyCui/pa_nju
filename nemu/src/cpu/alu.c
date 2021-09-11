@@ -19,7 +19,8 @@ void set_CF(uint32_t result, uint32_t src, uint32_t dest, size_t data_size, Oper
         case ADC: cpu.eflags.CF = result < src || (cpu.eflags.CF && result == src); break;
         case SBB: cpu.eflags.CF = result > dest || (cpu.eflags.CF && result == dest); break; 
         case AND: case OR: case XOR: cpu.eflags.CF = 0; break;
-        case SHL: cpu.eflags.CF = (dest >> (data_size - src)) % 2;break;
+        case SHL: cpu.eflags.CF = (dest >> (data_size - src)) % 2; break;
+        case SHR: cpu.eflags.CF = (dest >> (data_size - 1)) % 2; break;
         default: break;
     }
 }
@@ -36,30 +37,6 @@ void set_OF(uint32_t result, uint32_t src, uint32_t dest, size_t data_size, Oper
         case AND: case OR: case XOR: cpu.eflags.CF = 0; break;
         default: break;
     }
-}
-
-void set_ZF(uint32_t result, size_t data_size)
-{
-    result = resize(result, data_size);
-    cpu.eflags.ZF = result == 0;
-}
-
-void set_SF(uint32_t result, size_t data_size)
-{
-    result = sign_ext(resize(result, data_size), data_size);
-    cpu.eflags.SF = sign(result);
-}
-
-void set_PF(uint32_t result)
-{
-    int ones = 0;
-    for (int i = 0; i < 8; i++) 
-    {
-        if (result % 2 == 1) 
-            ones += 1;
-        result = result >> 1;
-    }
-    cpu.eflags.PF = ones % 2 == 0;
 }
 
 uint32_t alu_add(uint32_t src, uint32_t dest, size_t data_size)
@@ -227,10 +204,9 @@ uint32_t alu_shr(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_shr(src, dest, data_size);
 #else
-	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
-	fflush(stdout);
-	assert(0);
-	return 0;
+	uint32_t res = (uint32_t)dest >> src; // Calculate the Result
+	set_flags(res, src, dest, data_size, SHR); // set flags
+	return resize(res, data_size);
 #endif
 }
 

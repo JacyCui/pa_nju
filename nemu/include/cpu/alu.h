@@ -6,17 +6,38 @@
 // Self-Defined Helper Functions
 // Clear higner bits
 # define resize(result, data_size) ((result) & (0xFFFFFFFF >> (32 - (data_size))))
-typedef enum {ADC, SBB, AND, OR, XOR, SHL} Operation;
+typedef enum {ADC, SBB, AND, OR, XOR, SHL, SHR} Operation;
 
 //set flags
+void set_flags(uint32_t result, uint32_t src, uint32_t dest, size_t data_size, Operation op);
+
 void set_CF(uint32_t result, uint32_t src, uint32_t dest, size_t data_size, Operation op);
 void set_OF(uint32_t result, uint32_t src, uint32_t dest, size_t data_size, Operation op);
 
-void set_ZF(uint32_t result, size_t data_size);
-void set_SF(uint32_t result, size_t data_size);
-void set_PF(uint32_t result);
+inline void set_ZF(uint32_t result, size_t data_size)
+{
+    result = resize(result, data_size);
+    cpu.eflags.ZF = result == 0;
+}
 
-void set_flags(uint32_t result, uint32_t src, uint32_t dest, size_t data_size, Operation op);
+inline void set_SF(uint32_t result, size_t data_size)
+{
+    result = sign_ext(resize(result, data_size), data_size);
+    cpu.eflags.SF = sign(result);
+}
+
+inline void set_PF(uint32_t result)
+{
+    int ones = 0;
+    for (int i = 0; i < 8; i++) 
+    {
+        if (result % 2 == 1) 
+            ones += 1;
+        result = result >> 1;
+    }
+    cpu.eflags.PF = ones % 2 == 0;
+}
+
 
 // enable NEMU_REF_ALU to use reference implementation
 // #define NEMU_REF_ALU
