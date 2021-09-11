@@ -5,7 +5,7 @@
 
 // Self-Defined Helper Functions
 // Clear higner bits
-# define resize(result, data_size) ((result) & (0xFFFFFFFF >> (32 - (data_size))))
+# define resize(result, data_size) (uint32_t)((result) & (0xFFFFFFFF >> (32 - (data_size))))
 typedef enum {ADC, SBB, AND, OR, XOR, SHL, SHR, SAR} Operation;
 
 //set flags
