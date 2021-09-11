@@ -7,16 +7,16 @@
 // Clear higner bits
 # define resize(result, data_size) ((result) & (0xFFFFFFFF >> (32 - (data_size))))
 
-typedef enum {ADD, ADC} Operation;
-void set_CF(uint32_t result, uint32_t src, size_t data_size, Operation op);
-
+typedef enum {ADD, ADC, SUB} Operation;
+void set_CF(uint32_t result, uint32_t src, uint32_t dest, size_t data_size, Operation op);
+void set_OF(uint32_t result, uint32_t src, uint32_t dest, size_t data_size, Operation op);
 
 void set_ZF(uint32_t result, size_t data_size);
 void set_SF(uint32_t result, size_t data_size);
 void set_PF(uint32_t result);
 
 
-void set_OF_add(uint32_t result, uint32_t src, uint32_t dest, size_t data_size);
+
 
 // enable NEMU_REF_ALU to use reference implementation
 // #define NEMU_REF_ALU

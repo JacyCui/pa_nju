@@ -1,13 +1,29 @@
 #include "cpu/cpu.h"
 
-void set_CF(uint32_t result, uint32_t src, size_t data_size, Operation op)
+void set_CF(uint32_t result, uint32_t src, uint32_t dest, size_t data_size, Operation op)
 {
     result = sign_ext(resize(result, data_size), data_size);
     src = sign_ext(resize(src, data_size), data_size);
-    if (op == ADD)
-        cpu.eflags.CF = result < src;
-    else if (op == ADC)
-        cpu.eflags.CF = result < src || (cpu.eflags.CF && result == src);
+    switch (op)
+    {
+        case ADD:
+            cpu.eflags.CF = result < src; break;
+        case ADC:
+            cpu.eflags.CF = result < src || (cpu.eflags.CF && result == src); break;
+    }
+}
+
+void set_OF(uint32_t result, uint32_t src, uint32_t dest, size_t data_size, Operation op)
+{
+    result = sign_ext(resize(result, data_size), data_size);
+    src = sign_ext(resize(src, data_size), data_size);
+    dest = sign_ext(resize(dest, data_size), data_size);
+    switch (op)
+    {
+        case ADD: 
+        case ADC:
+            cpu.eflags.OF = (sign(src) == sign(dest)) && (sign(src) != sign(result)); break;
+    }
 }
 
 void set_ZF(uint32_t result, size_t data_size)
@@ -34,13 +50,7 @@ void set_PF(uint32_t result)
     cpu.eflags.PF = ones % 2 == 0;
 }
 
-void set_OF_add(uint32_t result, uint32_t src, uint32_t dest, size_t data_size)
-{
-    result = sign_ext(resize(result, data_size), data_size);
-    src = sign_ext(resize(src, data_size), data_size);
-    dest = sign_ext(resize(dest, data_size), data_size);
-    cpu.eflags.OF = (sign(src) == sign(dest)) && (sign(src) != sign(result));
-}
+
 
 uint32_t alu_add(uint32_t src, uint32_t dest, size_t data_size)
 {
@@ -50,10 +60,10 @@ uint32_t alu_add(uint32_t src, uint32_t dest, size_t data_size)
 	uint32_t res = dest + src; // Calculate the Result
 	// set flags
 	set_PF(res);
-	set_CF(res, src, data_size, ADD);
+	set_CF(res, src, dest, data_size, ADD);
 	set_ZF(res, data_size);
 	set_SF(res, data_size);
-	set_OF_add(res, src, dest, data_size);
+	set_OF(res, src, dest, data_size, ADD);
 	return resize(res, data_size);
 #endif
 }
@@ -66,10 +76,10 @@ uint32_t alu_adc(uint32_t src, uint32_t dest, size_t data_size)
 	uint32_t res = dest + src + cpu.eflags.CF; // Calculate the Result
 	// set flags
 	set_PF(res);
-	set_CF(res, src, data_size, ADC);
+	set_CF(res, src, dest, data_size, ADC);
 	set_ZF(res, data_size);
 	set_SF(res, data_size);
-	set_OF_add(res, src, dest, data_size);
+	set_OF(res, src, dest, data_size, ADC);
 	return resize(res, data_size);
 #endif
 }
@@ -79,10 +89,14 @@ uint32_t alu_sub(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_sub(src, dest, data_size);
 #else
-	printf("\e[0;31mPlease implement me at alu.c\e[0m\n");
-	fflush(stdout);
-	assert(0);
-	return 0;
+	uint32_t res = dest - src; // Calculate the Result
+	// set flags
+	set_PF(res);
+	set_CF(res, src, dest, data_size, ADC);
+	set_ZF(res, data_size);
+	set_SF(res, data_size);
+	set_OF(res, src, dest, data_size, SUB);
+	return resize(res, data_size);
 #endif
 }
 
