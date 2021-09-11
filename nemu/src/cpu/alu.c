@@ -11,7 +11,7 @@ void set_CF(uint32_t result, uint32_t src, uint32_t dest, size_t data_size, Oper
         case ADC:
             cpu.eflags.CF = result < src || (cpu.eflags.CF && result == src); break;
         case SUB:
-            cpu.eflags.CF = result >= src; break;
+            cpu.eflags.CF = dest < src; break;
         default:
             break;
     }
@@ -28,7 +28,7 @@ void set_OF(uint32_t result, uint32_t src, uint32_t dest, size_t data_size, Oper
         case ADC:
             cpu.eflags.OF = (sign(src) == sign(dest)) && (sign(src) != sign(result)); break;
         case SUB:
-            set_OF(result, src, dest, data_size, ADD); break;
+            set_OF(result, -src, dest, data_size, ADD); break;
         default: 
             break;
     }
@@ -97,8 +97,7 @@ uint32_t alu_sub(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_sub(src, dest, data_size);
 #else
-    src = ~src + 1;
-	uint32_t res = dest + src; // Calculate the Result
+	uint32_t res = dest - src; // Calculate the Result
 	// set flags
 	set_PF(res);
 	set_CF(res, src, dest, data_size, SUB);
