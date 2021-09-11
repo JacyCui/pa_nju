@@ -92,7 +92,7 @@ uint32_t alu_sbb(uint32_t src, uint32_t dest, size_t data_size)
         bool cf = cpu.eflags.CF;
         src = alu_add(1, src, data_size);
         cpu.eflags.CF = cf || cpu.eflags.CF;
-        cpu.eflags.OF = of || cpu.eflags.OF;
+        //cpu.eflags.OF = of || cpu.eflags.OF;
         return res - 1;
     }
     return alu_sub(src, dest, data_size);
