@@ -1,18 +1,11 @@
 #include "cpu/cpu.h"
 
-
-void set_CF_add(uint32_t result, uint32_t src, size_t data_size)
+void set_CF(uint32_t result, uint32_t src, size_t data_size, Operation op)
 {
     result = sign_ext(resize(result, data_size), data_size);
     src = sign_ext(resize(src, data_size), data_size);
-    cpu.eflags.CF = result < src;
-}
-
-void set_CF_adc(uint32_t result, uint32_t src, size_t data_size)
-{
-    result = sign_ext(resize(result, data_size), data_size);
-    src = sign_ext(resize(src, data_size), data_size);
-    cpu.eflags.CF = result <= src;
+    if (op == ADD)
+        cpu.eflags.CF = result < src;
 }
 
 void set_ZF(uint32_t result, size_t data_size)
@@ -55,7 +48,7 @@ uint32_t alu_add(uint32_t src, uint32_t dest, size_t data_size)
 	uint32_t res = dest + src; // Calculate the Result
 	// set flags
 	set_PF(res);
-	set_CF_add(res, src, data_size);
+	set_CF(res, src, data_size, ADD);
 	set_ZF(res, data_size);
 	set_SF(res, data_size);
 	set_OF_add(res, src, dest, data_size);
@@ -68,15 +61,10 @@ uint32_t alu_adc(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_adc(src, dest, data_size);
 #else
-	uint32_t carry = resize(cpu.eflags.CF, data_size);
-    uint32_t res = dest + src + carry; // Calculate the Result
-	// set flags
-	set_PF(res);
-	set_CF_adc(res, src, data_size);
-	set_ZF(res, data_size);
-	set_SF(res, data_size);
-	set_OF_add(res, src, dest, data_size);
-	return resize(res, data_size);
+	if (cpu.eflags.CF)
+	    return 0;
+	else
+	    return alu_add(src, dest, data_size);
 #endif
 }
 

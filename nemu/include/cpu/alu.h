@@ -7,7 +7,8 @@
 // Clear higner bits
 # define resize(result, data_size) ((result) & (0xFFFFFFFF >> (32 - (data_size))))
 
-void set_CF_add(uint32_t result, uint32_t src, size_t data_size);
+enum Operation {ADD, ADC};
+void set_CF(uint32_t result, uint32_t src, size_t data_size, Operation op);
 
 
 void set_ZF(uint32_t result, size_t data_size);
