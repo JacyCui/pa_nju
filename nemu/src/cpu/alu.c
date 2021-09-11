@@ -96,7 +96,7 @@ uint32_t alu_sbb(uint32_t src, uint32_t dest, size_t data_size)
     //cpu.eflags.OF = of || cpu.eflags.OF;
     */
     //return res;
-    return alu_sub(src + cpu.eflags.CF, dest, data_size)
+    return alu_sub(src + cpu.eflags.CF, dest, data_size);
 #endif
 }
 
