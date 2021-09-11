@@ -240,6 +240,8 @@ uint32_t alu_sar(uint32_t src, uint32_t dest, size_t data_size)
 	return __ref_alu_sar(src, dest, data_size);
 #else
 	uint32_t res = (int32_t)sign_ext(resize(dest, data_size), 32) >> src; // Calculate the Result
+	uint32_t ref = __ref_alu_sar(src, dest, data_size);
+	printf("dest = %x, src = %d, expect %x, but got %x", dest, src, ref, res);
 	set_flags(res, src, dest, data_size, SHR); // set flags
 	return resize(res, data_size);
 #endif
