@@ -45,8 +45,7 @@ uint32_t alu_add(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_add(src, dest, data_size);
 #else
-	uint32_t res = 0;
-	res = dest + src; // Calculate the Result
+	uint32_t res = dest + src; // Calculate the Result
 	// set flags
 	set_PF(res);
 	set_CF_add(res, src, data_size);
@@ -63,7 +62,7 @@ uint32_t alu_adc(uint32_t src, uint32_t dest, size_t data_size)
 	return __ref_alu_adc(src, dest, data_size);
 #else
 	uint32_t carry = resize(cpu.eflags.CF, data_size);
-    return alu_add(alu_add(src, carry, data_size), dest, data_size);
+    return alu_add(src + carry, dest, data_size);
 #endif
 }
 
