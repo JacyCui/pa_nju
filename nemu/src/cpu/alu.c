@@ -112,7 +112,7 @@ uint64_t alu_mul(uint32_t src, uint32_t dest, size_t data_size)
 #else
 	uint64_t res = resize(src, data_size) * resize(dest, data_size);
 	uint64_t ref = __ref_alu_mul(src, dest, data_size);
-	printf("src = %d = %x, dest = %d = %x, res = %d = %x, ref = %d = %x\n", src, src, dest, dest, res, res, ref, ref);
+	printf("src = %d = %x, dest = %d = %x, res = %lld = %llx, ref = %lld = %llx\n", src, src, dest, dest, res, res, ref, ref);
 	return res;
 #endif
 }
