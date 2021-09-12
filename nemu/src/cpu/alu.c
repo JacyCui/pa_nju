@@ -114,7 +114,7 @@ uint64_t alu_mul(uint32_t src, uint32_t dest, size_t data_size)
 	bool of_cf = res >> data_size == 0;
 	//uint64_t ref = __ref_alu_mul(src, dest, data_size);
 	//printf("src = %d = %x, dest = %d = %x, res = %lld = %llx, ref = %lld = %llx\n", src, src, dest, dest, res, res, ref, ref);
-	cpu.flags.CF = of_cf;
+	cpu.eflags.CF = of_cf;
 	cpu.eflags.OF = of_cf;
 	return res;
 #endif
