@@ -111,9 +111,7 @@ uint64_t alu_mul(uint32_t src, uint32_t dest, size_t data_size)
 	return __ref_alu_mul(src, dest, data_size);
 #else
 	uint64_t res = (uint64_t)src * (uint64_t)dest;
-	uint64_t higher_bits = (res >> data_size) != 0;
-	cpu.eflags.CF = higher_bits != 0;
-	cpu.eflags.OF = higher_bits != 0;
+	cpu.eflags.OF = cpu.eflags.CF = res >> data_size != 0;
 	return res;
 #endif
 }
