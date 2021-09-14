@@ -142,7 +142,7 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 	fa.val = a;
 	fb.val = b;
 	FLOAT r;
-	r.fval = a.fval + b.fval;
+	r.fval = fa.fval + fb.fval;
 	printf("a = %x = %f, b = %x = %f, \033[32m a + b expect: %x = %f \033[0m", fa.val, fa.fval, fb.val, fb.fval, r.val, r.fval);
 	// infity, NaN
 	if (fa.exponent == 0xff)
