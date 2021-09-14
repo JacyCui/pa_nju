@@ -83,7 +83,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		/* TODO: round up and remove the GRS bits */
 		uint32_t grs = sig_grs & 0x7;
 		sig_grs = sig_grs >> 3;
-		if (grs > 0x4 || (grs = 0x4 && (sig_grs & 0x1 == 1))) 
+		if (grs > 0x4 || (grs = 0x4 && (sig_grs & 0x1) == 1)) 
 		    sig_grs += 1;
 		if ((sig_grs >> 23) > 1)
 		{
