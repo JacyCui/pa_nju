@@ -100,7 +100,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 	f.sign = sign;
 	f.exponent = (uint32_t)(exp & 0xff);
 	f.fraction = sig_grs; // here only the lowest 23 bits are kept
-	printf("got: %x = %f \n", f.val, f.fval);
+	//printf("got: %x = %f \n", f.val, f.fval);
 	return f.val;
 }
 
@@ -142,10 +142,10 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 	fa.val = a;
 	fb.val = b;
 	
-	FLOAT ref;
-	ref.fval = fa.fval + fb.fval;
+	//FLOAT ref;
+	//ref.fval = fa.fval + fb.fval;
     //debug
-	printf("a = %x = %f, b = %x = %f, a + b = %x = %f\n", fa.val, fa.fval, fb.val, fb.fval, ref.val, ref.fval);
+	//printf("a = %x = %f, b = %x = %f, a + b = %x = %f\n", fa.val, fa.fval, fb.val, fb.fval, ref.val, ref.fval);
 	
 	// infity, NaN
 	if (fa.exponent == 0xff)
@@ -172,13 +172,13 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 		sig_b |= 0x800000; // the hidden 1
 
 	// alignment shift for fa
-	uint32_t shift = 0;
+	uint32_t shift = (fb.exponent == 0 ? fb.exponent + 1 : fb.exponent) - (fa.exponent == 0 ? fa.exponent + 1 : fa.exponent);
 
 	/* TODO: shift = ? */
-	if (fa.exponent == 0)
-	    shift = fb.exponent - 1;
-	else
-	    shift = fb.exponent - fa.exponent;
+	//if (fa.exponent == 0)
+	//    shift = fb.exponent - 1;
+	//else
+	//    shift = fb.exponent - fa.exponent;
 	assert(shift >= 0);
 
 	sig_a = (sig_a << 3); // guard, round, sticky
