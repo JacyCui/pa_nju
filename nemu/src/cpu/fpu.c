@@ -8,7 +8,7 @@ FLOAT p_zero, n_zero, p_inf, n_inf, p_nan, n_nan;
 // the last three bits of the significand are reserved for the GRS bits
 inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 {
-    uint32_t sticky = 0;
+    uint32_t sticky = sig_grs & 0x1;
 	// normalization
 	bool overflow = false; // true if the result is INFINITY or 0 during normalize
 
@@ -17,8 +17,8 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 	    
 		// normalize toward right
 		while ((((sig_grs >> (23 + 3)) > 1) && exp < 0xff) // condition 1
-			  // ||										   // or
-			  // (sig_grs > 0x04 && exp < 0)				   // condition 2
+			   ||										   // or
+			   (sig_grs > 0x04 && exp < 0)				   // condition 2
 			   )
 		{
 
@@ -172,13 +172,10 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 		sig_b |= 0x800000; // the hidden 1
 
 	// alignment shift for fa
-	uint32_t shift = (fb.exponent == 0 ? fb.exponent + 1 : fb.exponent) - (fa.exponent == 0 ? fa.exponent + 1 : fa.exponent);
+	uint32_t shift = 0;
 
 	/* TODO: shift = ? */
-	//if (fa.exponent == 0)
-	//    shift = fb.exponent - 1;
-	//else
-	//    shift = fb.exponent - fa.exponent;
+	shift = (fb.exponent == 0 ? fb.exponent + 1 : fb.exponent) - (fa.exponent == 0 ? fa.exponent + 1 : fa.exponent);
 	assert(shift >= 0);
 
 	sig_a = (sig_a << 3); // guard, round, sticky
