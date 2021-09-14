@@ -144,7 +144,7 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 	
 	FLOAT ref;
 	ref.fval = fa.fval + fb.fval;
-    debug
+    //debug
 	printf("a = %x = %f, b = %x = %f, a + b = %x = %f\n", fa.val, fa.fval, fb.val, fb.fval, ref.val, ref.fval);
 	
 	// infity, NaN
