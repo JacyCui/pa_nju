@@ -84,6 +84,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 	{
 		/* TODO: round up and remove the GRS bits */
 		uint32_t grs = sig_grs & 0x7;
+		printf("grs = %x\n", grs);
 		sig_grs = sig_grs >> 3;
 		if (grs > 0x4 || (grs = 0x4 && (sig_grs & 0x1) == 1)) 
 		{
