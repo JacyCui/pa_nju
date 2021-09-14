@@ -201,6 +201,7 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 	}
 
 	sig_res = sig_a + sig_b;
+	printf("%x\n", sig_res);
 
 	if (sign(sig_res))
 	{
