@@ -14,7 +14,6 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 
 	if ((sig_grs >> (23 + 3)) > 1 || exp < 0)
 	{
-	    //printf("case1\n");
 		// normalize toward right
 		while ((((sig_grs >> (23 + 3)) > 1) && exp < 0xff) // condition 1
 			   ||										   // or
@@ -36,7 +35,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 			sig_grs = 0;
 			overflow = true;
 		}
-		if (exp == 0)
+		else if (exp == 0)
 		{
 			// we have a denormal here, the exponent is 0, but means 2^-126,
 			// as a result, the significand should shift right once more
@@ -45,7 +44,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		    sig_grs = sig_grs >> 1;
 		    sig_grs |= sticky;
 		}
-		if (exp < 0)
+		else if (exp < 0)
 		{
 			/* TODO: assign the number to zero */
 			exp = 0;
@@ -55,7 +54,6 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 	}
 	else if (((sig_grs >> (23 + 3)) == 0) && exp > 0)
 	{
-	    //printf("case2\n");
 		// normalize toward left
 		while (((sig_grs >> (23 + 3)) == 0) && exp > 0)
 		{
@@ -75,7 +73,6 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 	}
 	else if (exp == 0 && sig_grs >> (23 + 3) == 1)
 	{
-	    //printf("case3\n");
 		// two denormals result in a normal
 		exp++;
 	}
@@ -84,12 +81,10 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 	{
 		/* TODO: round up and remove the GRS bits */
 		uint32_t grs = sig_grs & 0x7;
-		//printf("grs = %x\n", grs);
 		sig_grs = sig_grs >> 3;
 		if (grs > 0x4 || (grs == 0x4 && (sig_grs & 0x1) == 1)) 
 		{
 		    sig_grs += 1;
-		    //printf("here\n");
 		}
 		if ((sig_grs >> 23) > 1)
 		{
@@ -106,7 +101,6 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 	f.sign = sign;
 	f.exponent = (uint32_t)(exp & 0xff);
 	f.fraction = sig_grs; // here only the lowest 23 bits are kept
-	//printf("got: %x = %f \n", f.val, f.fval);
 	return f.val;
 }
 
@@ -148,11 +142,6 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 	fa.val = a;
 	fb.val = b;
 	
-	//FLOAT ref;
-	//ref.fval = fa.fval + fb.fval;
-    //debug
-	//printf("a = %x = %f, b = %x = %f, a + b = %x = %f\n", fa.val, fa.fval, fb.val, fb.fval, ref.val, ref.fval);
-	
 	// infity, NaN
 	if (fa.exponent == 0xff)
 	{
@@ -178,10 +167,7 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 		sig_b |= 0x800000; // the hidden 1
 
 	// alignment shift for fa
-	uint32_t shift = 0;
-
-	/* TODO: shift = ? */
-	shift = (fb.exponent == 0 ? fb.exponent + 1 : fb.exponent) - (fa.exponent == 0 ? fa.exponent + 1 : fa.exponent);
+	uint32_t shift = (fb.exponent == 0 ? fb.exponent + 1 : fb.exponent) - (fa.exponent == 0 ? fa.exponent + 1 : fa.exponent);
 	assert(shift >= 0);
 
 	sig_a = (sig_a << 3); // guard, round, sticky
@@ -207,7 +193,6 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 	}
 
 	sig_res = sig_a + sig_b;
-	//printf("%x\n", sig_res >> 3);
 
 	if (sign(sig_res))
 	{
