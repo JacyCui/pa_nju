@@ -89,7 +89,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 		if (grs > 0x4 || (grs == 0x4 && (sig_grs & 0x1) == 1)) 
 		{
 		    sig_grs += 1;
-		    printf("here\n");
+		    //printf("here\n");
 		}
 		if ((sig_grs >> 23) > 1)
 		{
