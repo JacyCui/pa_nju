@@ -100,7 +100,7 @@ inline uint32_t internal_normalize(uint32_t sign, int32_t exp, uint64_t sig_grs)
 	f.sign = sign;
 	f.exponent = (uint32_t)(exp & 0xff);
 	f.fraction = sig_grs; // here only the lowest 23 bits are kept
-	printf("\033[31m but got: %x = %f \033[0m \n", fa.val, fa.fval, fb.val, fb.fval, r.val, r.fval);
+	printf("\033[31m but got: %x = %f \033[0m \n", f.val, f.fval);
 	return f.val;
 }
 
