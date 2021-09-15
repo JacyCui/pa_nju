@@ -142,10 +142,6 @@ uint32_t internal_float_add(uint32_t b, uint32_t a)
 	fa.val = a;
 	fb.val = b;
 	
-	FLOAT res;
-	res.fval = fa.fval + fb.fval;
-	printf("a = %f = %x, b = %f = %x, a + b = %f = %x \n", fa.fval, fa.val, fb.fval, fb.val, res.fval, res.val);
-	
 	// infity, NaN
 	if (fa.exponent == 0xff)
 	{
@@ -327,6 +323,8 @@ uint32_t internal_float_div(uint32_t b, uint32_t a)
 	FLOAT f, fa, fb;
 	fa.val = a;
 	fb.val = b;
+	
+	printf("a = %x = %f, b = %x = %f, ", fa.val, fa.fval, fb.val, fb.fval);
 
 	if (a == P_NAN_F || a == N_NAN_F || b == P_NAN_F || b == N_NAN_F)
 		return a == P_NAN_F || b == P_NAN_F ? P_NAN_F : N_NAN_F;
@@ -378,7 +376,10 @@ uint32_t internal_float_div(uint32_t b, uint32_t a)
 	if (fb.exponent == 0)
 		fb.exponent++;
 	uint32_t exp_res = fa.exponent - fb.exponent + 127 - (shift - 23 - 3);
-	return internal_normalize(f.sign, exp_res, sig_res);
+	FLOAT result;
+	result.val = internal_normalize(f.sign, exp_res, sig_res);
+	printf("a * b = %x = %f", result.val, result.fval);
+	return result.val;
 }
 
 void fpu_load(uint32_t val)
