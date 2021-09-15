@@ -378,7 +378,7 @@ uint32_t internal_float_div(uint32_t b, uint32_t a)
 	uint32_t exp_res = fa.exponent - fb.exponent + 127 - (shift - 23 - 3);
 	FLOAT result;
 	result.val = internal_normalize(f.sign, exp_res, sig_res);
-	printf("a * b = %x = %f", result.val, result.fval);
+	printf("a * b = %x = %f \n", result.val, result.fval);
 	return result.val;
 }
 
