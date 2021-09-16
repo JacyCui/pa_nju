@@ -2,11 +2,11 @@
 
 void set_flags(uint32_t result, uint32_t src, uint32_t dest, size_t data_size, Operation op)
 {
-    set_PF(result);
 	set_CF(result, src, dest, data_size, op);
+	set_OF(result, src, dest, data_size, op);
+	set_PF(result);
 	set_ZF(result, data_size);
 	set_SF(result, data_size);
-	set_OF(result, src, dest, data_size, op);
 }
 
 void set_CF(uint32_t result, uint32_t src, uint32_t dest, size_t data_size, Operation op)
