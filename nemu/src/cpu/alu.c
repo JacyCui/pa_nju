@@ -20,7 +20,7 @@ void set_CF(uint32_t result, uint32_t src, uint32_t dest, size_t data_size, Oper
         case SBB: cpu.eflags.CF = result > dest || (cpu.eflags.CF && result == dest); break; 
         case AND: case OR: case XOR: cpu.eflags.CF = 0; break;
         case SHL: cpu.eflags.CF = (dest >> (data_size - src)) & 0x1; break;
-        case SHR: case SAR: cpu.eflags.CF = (dest >> (src - 1)) % 0x1; break;
+        case SHR: case SAR: cpu.eflags.CF = (dest >> (src - 1)) & 0x1; break;
         default: break;
     }
 }
