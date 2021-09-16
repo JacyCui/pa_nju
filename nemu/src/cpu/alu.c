@@ -53,14 +53,13 @@ void set_SF(uint32_t result, size_t data_size)
 
 void set_PF(uint32_t result)
 {
-    int ones = 0;
+    uint32_t ones = 0;
     for (int i = 0; i < 8; i++) 
     {
-        if ((result & 0x1) == 1) 
-            ones += 1;
+        ones = (result & 0x1) ^ ones;
         result = result >> 1;
     }
-    cpu.eflags.PF = ones % 2 == 0;
+    cpu.eflags.PF = ones;
 }
 
 uint32_t alu_add(uint32_t src, uint32_t dest, size_t data_size)
