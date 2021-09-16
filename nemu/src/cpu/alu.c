@@ -56,7 +56,7 @@ void set_PF(uint32_t result)
     int ones = 0;
     for (int i = 0; i < 8; i++) 
     {
-        if (result % 2 == 1) 
+        if (result & 0x1 == 1) 
             ones += 1;
         result = result >> 1;
     }
