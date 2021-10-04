@@ -11,6 +11,7 @@ static void instr_execute_1op() {
     opr_dest.data_size = data_size;
     
     operand_read(&opr_src);
+    printf("push: opr_src.val = %x\n", opr_src.val);
     opr_dest.val = opr_src.val;
     operand_write(&opr_dest);
 }
