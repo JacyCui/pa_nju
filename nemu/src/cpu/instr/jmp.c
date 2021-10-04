@@ -18,3 +18,11 @@ make_instr_func(jmp_near)
 
         return 1 + data_size / 8;
 }
+
+static void instr_execute_1op() 
+{
+    operand_read(&opr_src);
+    cpu.eip += sign_ext(opr_src.val, opr_src.data_size);
+}
+
+make_instr_impl_1op(jmp, i, short_);
