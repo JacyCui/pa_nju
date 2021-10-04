@@ -1,4 +1,5 @@
 #include "cpu/instr.h"
+#include <stdio.h>
 /*
 Put the implementations of `cmp' instructions here.
 */
@@ -6,6 +7,7 @@ Put the implementations of `cmp' instructions here.
 static void instr_execute_2op() 
 {
     alu_sub(opr_src.val, opr_dest.val, data_size);
+    printf("here\n");
 }
 
 make_instr_impl_2op(cmp, i, rm, bv);
