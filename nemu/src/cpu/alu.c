@@ -34,7 +34,7 @@ void set_OF(uint32_t result, uint32_t src, uint32_t dest, size_t data_size, Oper
     {
         case ADC: cpu.eflags.OF = (sign(src) == sign(dest)) && (sign(src) != sign(result)); break;
         case SBB: cpu.eflags.OF = (sign(src) != sign(dest)) && (sign(dest) != sign(result)); break;
-        case AND: case OR: case XOR: cpu.eflags.CF = 0; break;
+        case AND: case OR: case XOR: cpu.eflags.OF = 0; break;
         default: break;
     }
 }
