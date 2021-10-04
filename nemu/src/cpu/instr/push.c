@@ -4,8 +4,6 @@ Put the implementations of 'push' instructions here.
 */
 
 static void instr_execute_1op() {
-    printf("esp = %x, eip = %x, ebp = %x\n", cpu.esp, cpu.eip, cpu.ebp);
-    
     cpu.esp -= data_size / 8;
     
     opr_dest.type = OPR_MEM;
@@ -13,7 +11,6 @@ static void instr_execute_1op() {
     opr_dest.data_size = data_size;
     
     operand_read(&opr_src);
-    printf("push: opr_src.val = %x = %x\n ", opr_src.val, cpu.ebp);
     opr_dest.val = opr_src.val;
     operand_write(&opr_dest);
 }
