@@ -3,7 +3,8 @@
 Put the implementations of `call' instructions here.
 */
 
-make_instr_func(call_i_near) {
+make_instr_func(call_i_near) 
+{
     int len = 1;
     concat(decode_data_size_, near)
 	concat3(decode_operand, _, i)
