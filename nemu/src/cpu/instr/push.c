@@ -4,7 +4,7 @@ Put the implementations of 'push' instructions here.
 */
 
 static void instr_execute_1op() {
-    printf("esp = %x, eip = %x, ebp = %x\n", cpu.esp, cpu.eip, cpu.ebp)
+    printf("esp = %x, eip = %x, ebp = %x\n", cpu.esp, cpu.eip, cpu.ebp);
     
     cpu.esp -= data_size / 8;
     
