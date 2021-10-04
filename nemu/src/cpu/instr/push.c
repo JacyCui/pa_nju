@@ -5,7 +5,7 @@ Put the implementations of 'push' instructions here.
 
 static void instr_execute_1op() {
     operand_read(&opr_src);
-    opr_src.val -= datasize / 8;
+    opr_src.val -= data_size / 8;
     operand_write(&opr_src);
 }
 
