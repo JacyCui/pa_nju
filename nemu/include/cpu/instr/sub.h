@@ -4,4 +4,6 @@
 Put the declarations of `sub' instructions here.
 */
 
+make_instr_func(sub_i2rm_v);
+
 #endif
