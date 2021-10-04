@@ -4,6 +4,6 @@
 Put the declarations of `cmp' instructions here.
 */
 
-make_instr_func(cmp_i2rm_v);
+make_instr_func(cmp_i2rm_bv);
 
 #endif
