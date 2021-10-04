@@ -14,6 +14,7 @@ static void instr_execute_1op() {
     operand_read(&opr_src);
     opr_dest.val = opr_src.val;
     operand_write(&opr_dest);
+    printf("push: eip = %x, esp = %x \n", cpu.eip, cpu.esp);
 }
 
 make_instr_impl_1op(push, r, v);

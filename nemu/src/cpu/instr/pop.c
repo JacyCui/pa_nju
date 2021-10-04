@@ -14,6 +14,7 @@ static void instr_execute_1op() {
     operand_write(&opr_src);
     // refresh esp
     cpu.esp += data_size / 8;
+    printf("pop: eip = %x, esp = %x \n", cpu.eip, cpu.esp);
 }
 
 make_instr_impl_1op(pop, r, v);

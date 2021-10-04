@@ -15,6 +15,8 @@ static void instr_execute_1op() {
     // call
     operand_read(&opr_src);
     cpu.eip += opr_src.val;
+    
+    printf("call: eip = %x, esp = %x \n", cpu.eip, cpu.esp);
 }
 
 make_instr_impl_1op(call, i, near);
