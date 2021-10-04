@@ -25,4 +25,4 @@ static void instr_execute_1op()
     cpu.eip += sign_ext(opr_src.val, opr_src.data_size);
 }
 
-make_instr_impl_1op(jmp, i, short_);
+make_instr_impl_1op(jmp, i, short_)

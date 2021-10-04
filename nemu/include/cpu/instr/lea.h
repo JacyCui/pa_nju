@@ -4,4 +4,6 @@
 Put the declarations of `lea' instructions here.
 */
 
+make_instr_func(lea_rm2r_v);
+
 #endif
