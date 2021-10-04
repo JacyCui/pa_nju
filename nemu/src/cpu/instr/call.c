@@ -3,20 +3,22 @@
 Put the implementations of `call' instructions here.
 */
 
-static void instr_execute_1op() {
-    // push(eip)
+make_instr_func(call_i_near) {
+    int len = 1;
+    concat(decode_data_size_, near)
+	concat3(decode_operand, _, i)
+	
+	// push(eip)
     cpu.esp -= data_size / 8;
     opr_dest.type = OPR_MEM;
     opr_dest.addr = cpu.esp;
     opr_dest.data_size = data_size;
-    opr_dest.val = cpu.eip;
+    opr_dest.val = cpu.eip + len - 1;
     operand_write(&opr_dest);
     
     // call
     operand_read(&opr_src);
     cpu.eip += opr_src.val;
-    
-    printf("call: eip = %x, esp = %x \n", cpu.eip, cpu.esp);
+	                                                                                                    \
+	return len;                                                                                                             
 }
-
-make_instr_impl_1op(call, i, near);
