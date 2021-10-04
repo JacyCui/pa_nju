@@ -7,7 +7,7 @@ static void instr_execute_2op()
 {
     operand_read(&opr_src);
     operand_read(&opr_dest);
-	
+	printf("here\n");
 	alu_and(opr_src.val, opr_dest.val, opr_src.data_size);
 }
 
