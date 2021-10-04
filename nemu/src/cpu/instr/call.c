@@ -4,7 +4,7 @@ Put the implementations of `call' instructions here.
 */
 
 static void instr_execute_1op() {
-    // push eip
+    // push(eip)
     cpu.esp -= data_size / 8;
     opr_dest.type = OPR_MEM;
     opr_dest.addr = cpu.esp;
