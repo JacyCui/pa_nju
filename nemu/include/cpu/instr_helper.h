@@ -191,7 +191,7 @@ static inline bool inv_cc();
 	inv_cc()
 
 #define condition_ne \
-	inv_cc()
+	!cpu.eflags.ZF
 
 #define condition_na \
 	inv_cc()
