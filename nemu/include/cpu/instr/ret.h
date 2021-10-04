@@ -4,6 +4,6 @@
 Put the declarations of `ret' instructions here.
 */
 
-make_instr_func(ret_i_near);
+make_instr_func(ret_near);
 
 #endif
