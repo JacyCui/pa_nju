@@ -1,5 +1,6 @@
 #include "cpu/instr.h"
 
+/*
 make_instr_func(jmp_near)
 {
         OPERAND rel;
@@ -17,7 +18,7 @@ make_instr_func(jmp_near)
         cpu.eip += offset;
 
         return 1 + data_size / 8;
-}
+}*/
 
 static void instr_execute_1op() 
 {
