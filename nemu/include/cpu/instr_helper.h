@@ -179,7 +179,7 @@ static inline bool inv_cc();
 	inv_cc()
 
 #define condition_be \
-	inv_cc()
+	cpu.eflags.CF || cpu.eflags.ZF
 
 #define condition_o \
 	inv_cc()
