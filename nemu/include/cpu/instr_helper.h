@@ -227,6 +227,7 @@ static inline bool inv_cc(const char* info)
 {
 	printf("Please implement %s condition in instr_helper.h\n", info);
 	printf("here\n");
+	
 	fflush(stdout);
 	assert(0);
 	return false;
