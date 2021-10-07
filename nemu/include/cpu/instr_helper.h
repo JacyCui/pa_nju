@@ -209,7 +209,7 @@ static inline bool inv_cc(const char* info);
 	!cpu.eflags.ZF && cpu.eflags.SF == cpu.eflags.OF
 
 #define condition_ge \
-	inv_cc("ge")
+	cpu.eflags.SF == cpu.eflags.OF
 
 #define condition_l \
 	cpu.eflags.SF != cpu.eflags.OF
