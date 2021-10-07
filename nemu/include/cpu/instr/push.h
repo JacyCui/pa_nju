@@ -5,5 +5,6 @@ Put the declarations of `push' instructions here.
 */
 
 make_instr_func(push_r_v);
+make_instr_func(push_rm_v);
 
 #endif
