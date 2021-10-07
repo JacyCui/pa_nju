@@ -20,7 +20,7 @@ void print_reg()
 	printf("esi\t0x%08x\n", cpu.esi);
 	printf("edi\t0x%08x\n", cpu.edi);
 	printf("eip\t0x%08x\n", cpu.eip);
-	printf("CF:0x%01x\tOF:%01x\tZF:0x%01x\tPF:%01x\tSF:%01x\n", cpu.eflags.CF, cpu.eflags.OF, cpu.eflags.ZF, cpu.eflags.PF, cpu.eflags.SF);
+	printf("CF:%01x\tOF:%01x\tZF:%01x\tPF:%01x\tSF:%01x\n", cpu.eflags.CF, cpu.eflags.OF, cpu.eflags.ZF, cpu.eflags.PF, cpu.eflags.SF);
 }
 
 int get_reg_val(const char *reg, bool *success)
