@@ -170,25 +170,25 @@ static inline bool inv_cc();
 	cpu.eflags.ZF
 
 #define condition_a \
-	inv_cc()
+	inv_cc("a")
 
 #define condition_ae \
-	inv_cc()
+	inv_cc("ge")
 
 #define condition_b \
-	inv_cc()
+	inv_cc("b")
 
 #define condition_be \
 	cpu.eflags.CF || cpu.eflags.ZF
 
 #define condition_o \
-	inv_cc()
+	inv_cc("o")
 
 #define condition_p \
-	inv_cc()
+	inv_cc("p")
 
 #define condition_s \
-	inv_cc()
+	inv_cc("s")
 
 #define condition_ne \
 	!cpu.eflags.ZF
@@ -197,19 +197,19 @@ static inline bool inv_cc();
 	cpu.eflags.CF || cpu.eflags.ZF
 
 #define condition_no \
-	inv_cc()
+	inv_cc("no")
 
 #define condition_np \
-	inv_cc()
+	inv_cc("np")
 
 #define condition_ns \
-	inv_cc()
+	inv_cc("ns")
 
 #define condition_g \
 	!cpu.eflags.ZF && cpu.eflags.SF == cpu.eflags.OF
 
 #define condition_ge \
-	inv_cc()
+	inv_cc("ge")
 
 #define condition_l \
 	cpu.eflags.SF != cpu.eflags.OF
@@ -223,9 +223,9 @@ static inline bool inv_cc();
 #define condition_c \
 	cpu.eflags.CF
 
-static inline bool inv_cc()
+static inline bool inv_cc(const char* info)
 {
-	printf("Please implement cc condition in instr_helper.h\n");
+	printf("Please implement %s condition in instr_helper.h\n", info);
 	fflush(stdout);
 	assert(0);
 	return false;
