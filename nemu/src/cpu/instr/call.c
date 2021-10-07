@@ -14,7 +14,7 @@ make_instr_func(call_i_near)
     opr_dest.type = OPR_MEM;
     opr_dest.addr = cpu.esp;
     opr_dest.data_size = data_size;
-    opr_dest.val = cpu.eip + len - 1;
+    opr_dest.val = cpu.eip + len;
     operand_write(&opr_dest);
     
     // call
