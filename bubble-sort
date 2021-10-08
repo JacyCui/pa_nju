@@ -20,3 +20,7 @@ Fri Oct 8 14:13:48 CST 2021
 make-[1]: Entering directory '/home/pa201220014/pa_nju/kernel'
 make-[1]: 'kernel' is up to date.
 make-[1]: Leaving directory '/home/pa201220014/pa_nju/kernel'
+./nemu/nemu --testcase add
+NEMU load and execute img: [1m[32m./testcase/bin/add.img[0m  elf: [1m[36m./testcase/bin/add[0m
+(nemu) q
+make-: Nothing to be done for 'bubble-sort'.
