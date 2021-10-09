@@ -111,7 +111,7 @@ uint64_t alu_mul(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_mul(src, dest, data_size);
 #else
-    src = sign_ext(src, data_size);
+    // src = sign_ext(src, data_size);
 	uint64_t res = (uint64_t)src * (uint64_t)dest;
 	cpu.eflags.OF = cpu.eflags.CF = res >> data_size != 0;
 	return res;
@@ -123,7 +123,7 @@ int64_t alu_imul(int32_t src, int32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_imul(src, dest, data_size);
 #else
-    src = sign_ext(src, data_size);
+    // src = sign_ext(src, data_size);
 	int64_t res = (int64_t)src * (int64_t)dest;
 	cpu.eflags.OF = cpu.eflags.CF = res >> data_size != -1 && res >> data_size != 0;
 	return res;
