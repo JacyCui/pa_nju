@@ -10,7 +10,7 @@ static void instr_execute_1op()
     // fetch dest
     opr_dest.type = OPR_MEM;
     opr_dest.addr = cpu.esp;
-    opr_dest.data_size = opr_src.data_size;
+    opr_dest.data_size = data_size;
     // src to dest
     operand_read(&opr_src);
     opr_dest.val = sign_ext(opr_src.val, opr_dest.data_size);
