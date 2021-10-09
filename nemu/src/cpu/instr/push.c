@@ -13,7 +13,7 @@ static void instr_execute_1op()
     opr_dest.data_size = opr_src.data_size;
     // src to dest
     operand_read(&opr_src);
-    opr_dest.val = sign_ext(opr_src.val, opr_src.data_size);
+    opr_dest.val = sign_ext(opr_src.val, opr_dest.data_size);
     operand_write(&opr_dest);
 }
 
