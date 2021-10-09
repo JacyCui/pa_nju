@@ -11,6 +11,6 @@ make_instr_func(ret_near)
     opr_src.data_size = data_size;
     operand_read(&opr_src);
     cpu.esp += data_size / 8;
-    cpu.eip = opr_src.val;
+    cpu.eip = sign_ext(opr_src.val, opr_src.data_size);
     return 0;
 }
