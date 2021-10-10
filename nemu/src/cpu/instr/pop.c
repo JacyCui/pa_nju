@@ -11,7 +11,7 @@ static void instr_execute_1op()
     opr_dest.data_size = data_size;
     // dest to src
     operand_read(&opr_dest);
-    opr_src.val = sign_ext(opr_dest.val, dest.data_size);
+    opr_src.val = sign_ext(opr_dest.val, opr_dest.data_size);
     operand_write(&opr_src);
     // refresh esp
     cpu.esp += data_size / 8;
