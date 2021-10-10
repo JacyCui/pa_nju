@@ -19,6 +19,7 @@ make_instr_func(call_i_near)
     // call
     operand_read(&opr_src);
     cpu.eip = resize(cpu.eip + opr_src.val, data_size);
+    printf("debug: opr_src.val = 0x%x \n", opr_src.val);
 	                                                                                                    \
 	return len;                                                                                                             
 }
