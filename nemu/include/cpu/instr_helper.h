@@ -170,25 +170,25 @@ static inline bool inv_cc(const char* info);
 	cpu.eflags.ZF
 
 #define condition_a \
-	inv_cc("a")
+	!cpu.eflags.CF && !cpu.eflags.ZF
 
 #define condition_ae \
-	inv_cc("ge")
+	!cpu.eflags.CF
 
 #define condition_b \
-	inv_cc("b")
+	cpu.eflags.CF
 
 #define condition_be \
 	cpu.eflags.CF || cpu.eflags.ZF
 
 #define condition_o \
-	inv_cc("o")
+	cpu.eflags.OF
 
 #define condition_p \
-	inv_cc("p")
+	cpu.eflags.PF
 
 #define condition_s \
-	inv_cc("s")
+	cpu.eflags.SF
 
 #define condition_ne \
 	!cpu.eflags.ZF
@@ -197,13 +197,13 @@ static inline bool inv_cc(const char* info);
 	cpu.eflags.CF || cpu.eflags.ZF
 
 #define condition_no \
-	inv_cc("no")
+	!cpu.eflags.OF
 
 #define condition_np \
-	inv_cc("np")
+	!cpu.eflags.PF
 
 #define condition_ns \
-	inv_cc("ns")
+	!cpu.eflags.SF
 
 #define condition_g \
 	!cpu.eflags.ZF && cpu.eflags.SF == cpu.eflags.OF
