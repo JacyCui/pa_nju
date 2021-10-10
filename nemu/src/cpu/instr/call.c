@@ -5,6 +5,7 @@ Put the implementations of `call' instructions here.
 
 make_instr_func(call_i_near) 
 {
+    printf("debug: eip = 0x%x ", cpu.eip);
     int len = 1;
     concat(decode_data_size_, near)
 	concat3(decode_operand, _, i)
@@ -18,7 +19,6 @@ make_instr_func(call_i_near)
     
     // call
     operand_read(&opr_src);
-    printf("debug: eip = 0x%x ", cpu.eip);
     cpu.eip = resize(cpu.eip + opr_src.val, data_size);
     printf("opr_src.val = 0x%x eip = 0x%x\n", opr_src.val, cpu.eip);
 	                                                                                                    \
