@@ -17,6 +17,8 @@ make_instr_func(call_i_near)
     opr_dest.val = cpu.eip + len;
     operand_write(&opr_dest);
     
+    printf("debug: eip = 0x%x ", cpu.eip);
+    
     // call
     operand_read(&opr_src);
     cpu.eip = resize(cpu.eip + opr_src.val, data_size);
