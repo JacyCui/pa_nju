@@ -207,7 +207,6 @@ uint32_t alu_shl(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_shl(src, dest, data_size);
 #else
-    src = sign_ext(src, data_size);
 	uint32_t res = resize(dest, data_size) << src; // Calculate the Result
 	set_flags(res, src, dest, data_size, SHL); // set flags
 	return resize(res, data_size);
@@ -219,7 +218,6 @@ uint32_t alu_shr(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_shr(src, dest, data_size);
 #else
-    src = sign_ext(src, data_size);
 	uint32_t res = resize(dest, data_size) >> src; // Calculate the Result
 	set_flags(res, src, dest, data_size, SHR); // set flags
 	return resize(res, data_size);
@@ -231,7 +229,6 @@ uint32_t alu_sar(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_sar(src, dest, data_size);
 #else
-    src = sign_ext(src, data_size);
 	uint32_t res = (int32_t)sign_ext(dest, data_size) >> src; // Calculate the Result
 	set_flags(res, src, dest, data_size, SAR); // set flags
 	return resize(res, data_size);
