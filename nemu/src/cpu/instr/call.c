@@ -10,10 +10,9 @@ make_instr_func(call_i_near)
 	concat3(decode_operand, _, i)
 	
 	// push(eip)
-    cpu.esp -= data_size / 8;
+    cpu.esp -= opr_dest.data_size / 8;
     opr_dest.type = OPR_MEM;
     opr_dest.addr = cpu.esp;
-    opr_dest.data_size = data_size;
     opr_dest.val = cpu.eip + len;
     operand_write(&opr_dest);
     
