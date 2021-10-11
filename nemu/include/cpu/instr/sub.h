@@ -4,8 +4,8 @@
 Put the declarations of `sub' instructions here.
 */
 
-make_instr_func(sub_i2rm_v);
 make_instr_func(sub_i2rm_bv);
+make_instr_func(sub_i2rm_v);
 
 make_instr_func(sub_r2rm_v);
 
