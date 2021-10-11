@@ -77,7 +77,6 @@ uint32_t alu_adc(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_adc(src, dest, data_size);
 #else
-    src = sign_ext(src, data_size);
 	uint32_t res = dest + src + cpu.eflags.CF; // Calculate the Result
 	set_flags(res, src, dest, data_size, ADC); // set flags
 	return resize(res, data_size);
@@ -99,7 +98,6 @@ uint32_t alu_sbb(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_sbb(src, dest, data_size);
 #else
-    src = sign_ext(src, data_size);
     uint32_t res = dest - src - cpu.eflags.CF; // Calculate the Result
 	set_flags(res, src, dest, data_size, SBB); // set flags
 	return resize(res, data_size);
@@ -171,8 +169,6 @@ uint32_t alu_and(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_and(src, dest, data_size);
 #else
-    src = sign_ext(src, data_size);
-    printf("dest = %x, src = %x, data_size = %d\n", dest, src, data_size);
     uint32_t res = dest & src; // Calculate the Result
 	set_flags(res, src, dest, data_size, AND); // set flags
 	return resize(res, data_size);
@@ -184,7 +180,6 @@ uint32_t alu_xor(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_xor(src, dest, data_size);
 #else
-    src = sign_ext(src, data_size);
 	uint32_t res = dest ^ src; // Calculate the Result
 	set_flags(res, src, dest, data_size, XOR); // set flags
 	return resize(res, data_size);
@@ -196,7 +191,6 @@ uint32_t alu_or(uint32_t src, uint32_t dest, size_t data_size)
 #ifdef NEMU_REF_ALU
 	return __ref_alu_or(src, dest, data_size);
 #else
-    src = sign_ext(src, data_size);
 	uint32_t res = dest | src; // Calculate the Result
 	set_flags(res, src, dest, data_size, OR); // set flags
 	return resize(res, data_size);
