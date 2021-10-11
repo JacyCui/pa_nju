@@ -6,8 +6,8 @@ Put the implementations of `call' instructions here.
 make_instr_func(call_i_near) 
 {
     int len = 1;
-    concat(decode_data_size_, near)
-	concat3(decode_operand, _, i)
+    decode_data_size_near
+	decode_operand_i
 	
 	// push(eip)
     cpu.esp -= opr_dest.data_size / 8;
@@ -22,3 +22,23 @@ make_instr_func(call_i_near)
     
 	return len;                                                                                                             
 }
+
+make_instr_func(call_near_indirect) {
+    int len = 1;
+    decode_data_size_near
+    decode_operand_rm
+    
+    // push(eip)
+    cpu.esp -= opr_dest.data_size / 8;
+    opr_dest.type = OPR_MEM;
+    opr_dest.addr = cpu.esp;
+    opr_dest.val = cpu.eip + len;
+    operand_write(&opr_dest);
+    
+    // call
+    operand_read(&opr_src);
+    cpu.eip = opr_src.val;
+    
+    return 0;
+}
+

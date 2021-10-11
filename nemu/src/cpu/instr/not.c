@@ -10,4 +10,5 @@ static void instr_execute_1op()
     operand_write(&opr_src);
 }
 
+make_instr_impl_1op(not, rm, b)
 make_instr_impl_1op(not, rm, v)
