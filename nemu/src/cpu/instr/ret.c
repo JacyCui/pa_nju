@@ -31,7 +31,7 @@ make_instr_func(ret_near_imm16)
 	opr_src.addr = eip + 1;
 	opr_src.data_size = 16 / 8;
 	
-    oprand_read(&opr_src);
+    operand_read(&opr_src);
     cpu.esp += opr_src.val;
     
     return 0;
