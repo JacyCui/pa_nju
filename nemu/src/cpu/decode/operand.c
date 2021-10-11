@@ -82,7 +82,9 @@ void operand_write(OPERAND *opr)
 	case OPR_MEM:
 		// data size here
 		//assert(opr->sreg == SREG_DS || opr->sreg == SREG_SS);
+		printf("debug81: eip = 0x%x \n", cpu.eip);
 		vaddr_write(opr->addr, opr->sreg, opr->data_size / 8, opr->val);
+		printf("debug82: eip = 0x%x \n", cpu.eip);
 		break;
 	case OPR_REG:
 		// data size here
