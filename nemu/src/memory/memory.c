@@ -16,7 +16,9 @@ uint32_t hw_mem_read(paddr_t paddr, size_t len)
 
 void hw_mem_write(paddr_t paddr, size_t len, uint32_t data)
 {
+    printf("debug83: eip = 0x%x \n", cpu.eip);
 	memcpy(hw_mem + paddr, &data, len);
+	printf("debug84: eip = 0x%x \n", cpu.eip);
 }
 
 uint32_t paddr_read(paddr_t paddr, size_t len)
