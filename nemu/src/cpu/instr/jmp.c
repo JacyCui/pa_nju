@@ -30,6 +30,7 @@ make_instr_impl_1op(jmp, i, near)
 make_instr_impl_1op(jmp, i, short_)
 
 make_instr_func(jmp_near_indirect) {
+    int len = 1;
     decode_data_size_near
     decode_operand_rm
     operand_read(&opr_src);
