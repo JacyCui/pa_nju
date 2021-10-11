@@ -4,6 +4,8 @@
 Put the declarations of `xor' instructions here.
 */
 
+make_instr_func(xor_i2rm_b);
+
 make_instr_func(xor_r2rm_v);
 
 #endif
