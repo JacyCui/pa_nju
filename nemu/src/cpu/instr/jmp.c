@@ -32,7 +32,7 @@ make_instr_impl_1op(jmp, i, short_)
 make_instr_func(jmp_near_indirect) {
     decode_data_size_near
     decode_operand_rm
-    operand_read(opr_src);
+    operand_read(&opr_src);
     eip = opr_src.val;
     return 0;
 }
