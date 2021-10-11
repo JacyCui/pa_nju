@@ -172,6 +172,7 @@ uint32_t alu_and(uint32_t src, uint32_t dest, size_t data_size)
 	return __ref_alu_and(src, dest, data_size);
 #else
     src = sign_ext(src, data_size);
+    printf("dest = %x, src = %x, data_size = %d\n", dest, src, data_size);
     uint32_t res = dest & src; // Calculate the Result
 	set_flags(res, src, dest, data_size, AND); // set flags
 	return resize(res, data_size);
