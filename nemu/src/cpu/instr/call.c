@@ -5,7 +5,6 @@ Put the implementations of `call' instructions here.
 
 make_instr_func(call_i_near) 
 {
-    uint32_t pc = cpu.eip;
     int len = 1;
     concat(decode_data_size_, near)
 	concat3(decode_operand, _, i)
