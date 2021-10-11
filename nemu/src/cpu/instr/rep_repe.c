@@ -21,6 +21,6 @@ make_instr_func(rep_repe)
 			break;
 		}
 	}
-	printf("debug: len + 1 = %d, cpu.eip = %x \n", len + 1, cpu.eip)
+	printf("debug: len + 1 = %d, cpu.eip = %x \n", len + 1, cpu.eip);
 	return len + 1;
 }
