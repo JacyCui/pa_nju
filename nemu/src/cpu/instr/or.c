@@ -16,7 +16,7 @@ make_instr_impl_2op(or, i, a, v)
 
 make_instr_impl_2op(or, i, rm, b)
 
-make_instr_impl_2op(or, r, rm b)
+make_instr_impl_2op(or, r, rm, b)
 make_instr_impl_2op(or, r, rm, v)
 
 make_instr_impl_2op(or, rm, r, b)
