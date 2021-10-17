@@ -18,6 +18,7 @@ make_instr_func(call_i_near)
     
     // call
     operand_read(&opr_src);
+    print_asm_1("call", "_near", len, &opr_src);
     cpu.eip = cpu.eip + opr_src.val;
     
 	return len;                                                                                                             
@@ -37,6 +38,7 @@ make_instr_func(call_near_indirect) {
     
     // call
     operand_read(&opr_src);
+    print_asm_1("call", "_near_indirect", len, &opr_src);
     cpu.eip = opr_src.val;
     
     return 0;
