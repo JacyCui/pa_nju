@@ -38,7 +38,7 @@ uint32_t loader()
 		{
 
 			// remove this panic!!!
-			panic("Please implement the loader");
+			//panic("Please implement the loader");
 
 /* TODO: copy the segment from the ELF file to its proper memory area */
             memcpy((void *)ph->p_vaddr, (void *)ph->p_offset, ph->p_filesz);
