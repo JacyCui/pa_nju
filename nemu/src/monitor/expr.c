@@ -215,20 +215,8 @@ bool check_parentheses(int p, int q, bool* success) {
 
 int dominant_operator(int p, int q, bool* success) {
     int split = -1;
+    bool valid = true, first = true;
     for (int i = p; i <= q; i++) {
-        if (get_priority(tokens[i].type) != -1) {
-            split = i;
-            break;
-        }
-    }
-    
-    if (split == -1) {
-        *success = false;
-        return 0;
-    }
-    
-    bool valid = true;
-    for (int i = split + 1; i <= q; i++) {
         if (tokens[i].type == '(') {
             valid = false;
             continue;
@@ -238,10 +226,14 @@ int dominant_operator(int p, int q, bool* success) {
             continue;
         }
         if (valid && get_priority(tokens[i].type) != -1) {
-            if (get_priority(tokens[i].type) <= get_priority(tokens[split].type)) {
+            if (first || get_priority(tokens[i].type) <= get_priority(tokens[split].type)) {
                 split = i;
+                first = false;
             }
         }
+    }
+    if (split == -1) {
+        *success = false;
     }
     return split;
 }
