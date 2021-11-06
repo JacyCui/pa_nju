@@ -243,6 +243,15 @@ uint32_t eval(int p, int q, bool *success) {
         switch (tokens[p].type) {
             case DEC_NUM: sscanf(tokens[p].str, "%d", &result); break;
             case HEX_NUM: sscanf(tokens[p].str, "%x", &result); break;
+            case REG: 
+                if (strcmp(tokens[p].str, "$eip") == 0) {
+                    result = cpu.eip;
+                }
+                else {
+                    result = 0;
+                    *success = false;
+                }
+                break;
             default: result = 0; *success = false;
         }
         return result;
