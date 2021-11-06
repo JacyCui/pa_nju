@@ -14,10 +14,15 @@ enum
 {
 	NOTYPE = 256,
 	EQ,
+	NEG,
+	MORE_EQ,
+	LESS_EQ,
 	DEC_NUM,
 	HEX_NUM,
 	REG,
-	SYMB
+	SYMB,
+	NEG,
+	DE_REF
 
 	/* TODO: Add more token types */
 
@@ -40,10 +45,17 @@ static struct rule
 	{"-", '-'},
 	{"\\*", '*'},
 	{"/", '/'},
+	{"%", '%'},
 	{"\\$[a-z]{2,3}", REG},
 	{"[a-z][a-z0-9]*", SYMB},
 	{"\\(", '('},
-	{"\\)", ')'}
+	{"\\)", ')'},
+	{"==", EQ},
+	{"!=", NEQ},
+	{">", '>'},
+	{"<", '<'},
+	{">=", MORE_EQ},
+	{"<=", LESS_EQ}
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]))
@@ -106,9 +118,32 @@ static bool make_token(char *e)
 
 				switch (rules[i].token_type)
 				{
+				NOTYPE: break;
+				'-':
+				    if (tokens[nr_token - 1].type == DEC_NUM || tokens[nr_token - 1].type == HEX_NUM || tokens[nr_token - 1].type == REG || tokens[nr_token - 1].type == SYMB) {
+				        tokens[nr_token++].type = '-';
+				    }
+				    else {
+				        tokens[nr_token++].type = NEG;
+				    }
+				    break;
+				'*':
+				    if (tokens[nr_token - 1].type == DEC_NUM || tokens[nr_token - 1].type == HEX_NUM || tokens[nr_token - 1].type == REG || tokens[nr_token - 1].type == SYMB) {
+				        tokens[nr_token++].type = '*';
+				    }
+				    else {
+				        tokens[nr_token++].type = DE_REF;
+				    }
+				    break;
+				DEC_NUM:
+				HEX_NUM:
+				REG:
+				SYMB:
+				    strcpy(tokens[nr_token].str, substr_start, substr_len);
+				    tokens[nr_token].str[substr_len] = '\0';
+				    printf("debug: %s\n", tokens[nr_token].str);
 				default:
-					tokens[nr_token].type = rules[i].token_type;
-					nr_token++;
+					tokens[nr_token++].type = rules[i].token_type;
 				}
 
 				break;
