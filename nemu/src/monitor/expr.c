@@ -17,8 +17,8 @@ enum
 	NEQ,
 	MORE_EQ,
 	LESS_EQ,
-	AND,
-	OR,
+	AND_,
+	OR_,
 	DEC_NUM,
 	HEX_NUM,
 	REG,
@@ -68,8 +68,8 @@ static struct rule
 
 int get_priority(int type) {
     switch (type) {
-        case OR: return 0;
-        case AND: return 1;
+        case OR_: return 0;
+        case AND_: return 1;
         case EQ: case NEQ: case '<': case '>': case MORE_EQ: case LESS_EQ: return 2;
         case '%': return 3;
         case '+': case '-': return 4;
@@ -265,8 +265,8 @@ uint32_t eval(int p, int q, bool *success) {
             uint32_t val1 = eval(p, op - 1, success);
             uint32_t val2 = eval(op + 1, q, success);
             switch (tokens[op].type) {
-                case OR: return val1 || val2;
-                case AND: return val1 && val2;
+                case OR_: return val1 || val2;
+                case AND_: return val1 && val2;
                 case EQ: return val1 == val2;
                 case NEQ: return val1 != val2;
                 case '<': return val1 < val2;
