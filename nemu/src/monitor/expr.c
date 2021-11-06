@@ -39,8 +39,8 @@ static struct rule
 	 */
 
 	{" +", NOTYPE}, // white space
-	{"[0-9]+", DEC_NUM}, // decimal number
 	{"0[xX][0-9a-fA-F]+", HEX_NUM}, // heximal number
+	{"[0-9]+", DEC_NUM}, // decimal number
 	{"\\+", '+'},
 	{"-", '-'},
 	{"\\*", '*'},
