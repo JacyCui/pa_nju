@@ -75,7 +75,7 @@ int get_priority(int type) {
         case '%': return 4;
         case '+': case '-': return 5;
         case '*': case '/': return 6;
-        case NEG: return 7;
+        case NEG: case DE_REF: return 7;
         case '^': return 8;
         case '|': return 9;
         case '&': return 10;
