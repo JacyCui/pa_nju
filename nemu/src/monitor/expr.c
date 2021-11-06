@@ -1,5 +1,5 @@
 #include "nemu.h"
-#include "cpu/reg.h"
+#include "cpu/cpu.h"
 #include "memory/memory.h"
 
 #include <stdlib.h>
