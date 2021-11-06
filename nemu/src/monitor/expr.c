@@ -168,7 +168,7 @@ static bool make_token(char *e)
 }
 
 uint32_t eval(int p, int q, bool *success) {
-    
+    return 0;
 }
 
 uint32_t expr(char *e, bool *success)
