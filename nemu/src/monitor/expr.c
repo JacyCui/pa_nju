@@ -223,7 +223,7 @@ int dominant_operator(int p, int q) {
             valid = true;
             continue;
         }
-        if (valid && (get_priority(tokens[i].type) != -1 || get_priority(tokens[i].type) != 100)) {
+        if (valid && get_priority(tokens[i].type) != -1 && get_priority(tokens[i].type) != 100) {
             if (first || get_priority(tokens[i].type) <= get_priority(tokens[split].type)) {
                 split = i;
                 first = false;
