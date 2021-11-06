@@ -147,7 +147,7 @@ static bool make_token(char *e)
 				{
 				case NOTYPE: break;
 				case '-':
-				    if (nr_token == 0 || tokens[nr_token - 1].type == DEC_NUM || tokens[nr_token - 1].type == HEX_NUM || tokens[nr_token - 1].type == REG || tokens[nr_token - 1].type == SYMB) {
+				    if (nr_token != 0 && (tokens[nr_token - 1].type == DEC_NUM || tokens[nr_token - 1].type == HEX_NUM || tokens[nr_token - 1].type == REG || tokens[nr_token - 1].type == SYMB)) {
 				        tokens[nr_token++].type = '-';
 				    }
 				    else {
@@ -155,7 +155,7 @@ static bool make_token(char *e)
 				    }
 				    break;
 				case '*':
-				    if (nr_token == 0 || tokens[nr_token - 1].type == DEC_NUM || tokens[nr_token - 1].type == HEX_NUM || tokens[nr_token - 1].type == REG || tokens[nr_token - 1].type == SYMB) {
+				    if (nr_token != 0 && (tokens[nr_token - 1].type == DEC_NUM || tokens[nr_token - 1].type == HEX_NUM || tokens[nr_token - 1].type == REG || tokens[nr_token - 1].type == SYMB)) {
 				        tokens[nr_token++].type = '*';
 				    }
 				    else {
