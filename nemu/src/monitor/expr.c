@@ -119,7 +119,7 @@ static bool make_token(char *e)
 				switch (rules[i].token_type)
 				{
 				NOTYPE: break;
-				'-':
+				case '-':
 				    if (tokens[nr_token - 1].type == DEC_NUM || tokens[nr_token - 1].type == HEX_NUM || tokens[nr_token - 1].type == REG || tokens[nr_token - 1].type == SYMB) {
 				        tokens[nr_token++].type = '-';
 				    }
@@ -127,7 +127,7 @@ static bool make_token(char *e)
 				        tokens[nr_token++].type = NEG;
 				    }
 				    break;
-				'*':
+				case '*':
 				    if (tokens[nr_token - 1].type == DEC_NUM || tokens[nr_token - 1].type == HEX_NUM || tokens[nr_token - 1].type == REG || tokens[nr_token - 1].type == SYMB) {
 				        tokens[nr_token++].type = '*';
 				    }
@@ -135,10 +135,10 @@ static bool make_token(char *e)
 				        tokens[nr_token++].type = DE_REF;
 				    }
 				    break;
-				DEC_NUM:
-				HEX_NUM:
-				REG:
-				SYMB:
+				case DEC_NUM:
+				case HEX_NUM:
+				case REG:
+				case SYMB:
 				    strncpy(tokens[nr_token].str, substr_start, substr_len);
 				    tokens[nr_token].str[substr_len] = '\0';
 				    printf("debug: %s\n", tokens[nr_token].str);
