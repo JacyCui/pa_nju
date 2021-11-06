@@ -17,6 +17,8 @@ enum
 	NEQ,
 	MORE_EQ,
 	LESS_EQ,
+	AND,
+	OR,
 	DEC_NUM,
 	HEX_NUM,
 	REG,
@@ -55,7 +57,12 @@ static struct rule
 	{">", '>'},
 	{"<", '<'},
 	{">=", MORE_EQ},
-	{"<=", LESS_EQ}
+	{"<=", LESS_EQ},
+	{"!", '!'},
+	{"&&", AND},
+	{"||", OR},
+	{"&", '&'},
+	{"|", '|'}
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]))
@@ -140,8 +147,8 @@ static bool make_token(char *e)
 				case REG:
 				case SYMB:
 				    strncpy(tokens[nr_token].str, substr_start, substr_len);
-				    // tokens[nr_token].str[substr_len] = '\0';
-				    printf("debug: %s\n", tokens[nr_token].str);
+				    tokens[nr_token].str[substr_len] = '\0';
+				    // printf("debug: %s\n", tokens[nr_token].str);
 				default:
 					tokens[nr_token++].type = rules[i].token_type;
 				}
@@ -158,6 +165,10 @@ static bool make_token(char *e)
 	}
 
 	return true;
+}
+
+uint32_t eval(int p, int q, bool *success) {
+    
 }
 
 uint32_t expr(char *e, bool *success)
