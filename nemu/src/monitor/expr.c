@@ -25,9 +25,7 @@ enum
 	SYMB,
 	NEG,
 	DE_REF
-
 	/* TODO: Add more token types */
-
 };
 
 static struct rule
@@ -66,6 +64,25 @@ static struct rule
 	{"\\^", '^'},
 	{"~", '~'}
 };
+
+
+int get_priority(int type) {
+    switch (type) {
+        case OR: return 0;
+        case AND: return 1;
+        case '!': return 2;
+        case EQ: case NEQ: case '<': case '>': case MORE_EQ: case LESS_EQ: return 3;
+        case '%': return 4;
+        case '+': case '-': return 5;
+        case '*': case '/': return 6;
+        case '^': return 7;
+        case '|': return 8;
+        case '&': return 9;
+        case '~': return 10;
+        default: return -1;
+    }
+}
+
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]))
 
@@ -169,8 +186,117 @@ static bool make_token(char *e)
 	return true;
 }
 
+bool check_parentheses(int p, int q, bool* success) {
+    int num = 0;
+    if (tokens[p].type != '(' || tokens[q].type != ')') {
+        return false;
+    }
+    for (int i = p; i < q; i++) {
+        if (tokens[i].type == '(') {
+            num += 1;
+        }
+        else if (tokens[i].type == ')') {
+            num -= 1;
+        }
+        if (num < 0) {
+            *success = false;
+            return false;
+        }
+    }
+    if (num == 0) {
+        return true;
+    }
+    else {
+        *success = false;
+        return false;
+    }
+}
+
+int dominant_operator(int p, int q, bool* success) {
+    int split;
+    for (int i = p; i <= q; i++) {
+        if (get_priority(tokens[i].type) != -1) {
+            split = i;
+            break;
+        }
+    }
+    
+    if (split == q) {
+        *success = false;
+        return split;
+    }
+    
+    bool valid = true;
+    for (int i = split + 1; i <= q; i++) {
+        if (tokens[i].type == '(') {
+            valid = false;
+            continue;
+        }
+        if (tokens[i].type == ')') {
+            valid = true;
+            continue;
+        }
+        if (valid && get_priority(tokens[i].type) != -1) {
+            if (get_priority(tokens[i].type) <= get_priority(tokens[split].type)) {
+                split = i;
+            }
+        }
+    }
+    return split;
+}
+
 uint32_t eval(int p, int q, bool *success) {
-    return 0;
+    if (p > q) {
+        *success = false;
+        return 0;
+    }
+    else if (p == q) {
+        uint32_t result;
+        case (tokens[p].type) {
+            DEC_NUM: sscanf(tokens[p].str, "%d", &result);
+            HEX_NUM: sscanf(tokens[p].str, "%x", &result);
+            default: result = 0; *success = false;
+        }
+        return result;
+    }
+    else if (check_parentheses(p, q, success)){
+        return eval(p + 1, q - 1, success);
+    }
+    else {
+        if (get_priority(tokens[p].type) != -1) {
+            switch (tokens[p].type) {
+                case NEG: return -eval(p + 1, q);
+                case DE_REF: return vaddr_read(eval(p + 1, q), 0, 1);
+                case '!': return !eval(p + 1, q);
+                case '~': return ~eval(p + 1, q);
+                default: *success = false; return 0;
+            }
+        }
+        else {
+            op = dominant_operator(p, q, success);
+            uint32_t val1 = eval(p, op - 1, success);
+            uint32_t val2 = eval(op + 1, q, success);
+            switch (tokens[op].type) {
+                case OR: return val1 || val2;
+                case AND: return val1 && val2;
+                case EQ: return val1 == val2;
+                case NEQ: return val1 != val2;
+                case '<': return val1 < val2;
+                case '>': return val1 > val2;
+                case MORE_EQ: return val1 >= val2;
+                case LESS_EQ: return val1 <= val2;
+                case '%': return val1 % val2;
+                case '+': return val1 + val2;
+                case '-': return val1 - val2;
+                case '*': return val1 * val2;
+                case '/': return val1 / val2;
+                case '^': return val1 ^ val2;
+                case '|': return val1 | val2;
+                case '&': return val1 & val2;
+                default: *success = false; return 0;
+            }
+        }
+    }
 }
 
 uint32_t expr(char *e, bool *success)
@@ -180,10 +306,10 @@ uint32_t expr(char *e, bool *success)
 		*success = false;
 		return 0;
 	}
-
+/*
 	printf("\nPlease implement expr at expr.c\n");
 	fflush(stdout);
 	assert(0);
-
-	return 0;
+*/
+	return eval(0, nr_token - 1, success);
 }
