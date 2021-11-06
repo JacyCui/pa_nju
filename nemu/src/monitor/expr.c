@@ -253,8 +253,8 @@ uint32_t eval(int p, int q, bool *success) {
     else if (p == q) {
         uint32_t result;
         switch (tokens[p].type) {
-            case DEC_NUM: sscanf(tokens[p].str, "%d", &result);
-            case HEX_NUM: sscanf(tokens[p].str, "%x", &result);
+            case DEC_NUM: sscanf(tokens[p].str, "%d", &result); break;
+            case HEX_NUM: sscanf(tokens[p].str, "%x", &result); break;
             default: result = 0; *success = false;
         }
         return result;
