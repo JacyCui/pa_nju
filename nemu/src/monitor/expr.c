@@ -118,7 +118,7 @@ static bool make_token(char *e)
 
 				switch (rules[i].token_type)
 				{
-				NOTYPE: break;
+				case NOTYPE: break;
 				case '-':
 				    if (tokens[nr_token - 1].type == DEC_NUM || tokens[nr_token - 1].type == HEX_NUM || tokens[nr_token - 1].type == REG || tokens[nr_token - 1].type == SYMB) {
 				        tokens[nr_token++].type = '-';
