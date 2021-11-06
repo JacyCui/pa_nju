@@ -139,7 +139,7 @@ static bool make_token(char *e)
 				HEX_NUM:
 				REG:
 				SYMB:
-				    strcpy(tokens[nr_token].str, substr_start, substr_len);
+				    strncpy(tokens[nr_token].str, substr_start, substr_len);
 				    tokens[nr_token].str[substr_len] = '\0';
 				    printf("debug: %s\n", tokens[nr_token].str);
 				default:
