@@ -63,6 +63,4 @@ inline static uint64_t get_current_time_ms()
 	return ret;
 }
 
-// uint32_t look_up_symtab(char *sym, bool *success);
-
 #endif
