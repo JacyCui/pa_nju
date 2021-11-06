@@ -75,11 +75,10 @@ int get_priority(int type) {
         case '%': return 4;
         case '+': case '-': return 5;
         case '*': case '/': return 6;
-        case NEG: case DE_REF: return 7;
-        case '^': return 8;
-        case '|': return 9;
-        case '&': return 10;
-        case '~': return 11;
+        case '^': return 7;
+        case '|': return 8;
+        case '&': return 9;
+        case NEG: case DE_REF: case '~': return 10;
         default: return -1;
     }
 }
@@ -136,7 +135,7 @@ static bool make_token(char *e)
 				char *substr_start = e + position;
 				int substr_len = pmatch.rm_eo;
 
-				printf("match regex[%d] at position %d with len %d: %.*s\n", i, position, substr_len, substr_len, substr_start);
+				// printf("match regex[%d] at position %d with len %d: %.*s\n", i, position, substr_len, substr_len, substr_start);
 				position += substr_len;
 
 				/* TODO: Now a new token is recognized with rules[i]. 
@@ -176,7 +175,7 @@ static bool make_token(char *e)
 				break;
 			}
 		}
-
+		
 		if (i == NR_REGEX)
 		{
 			printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
@@ -299,10 +298,5 @@ uint32_t expr(char *e, bool *success)
 		*success = false;
 		return 0;
 	}
-/*
-	printf("\nPlease implement expr at expr.c\n");
-	fflush(stdout);
-	assert(0);
-*/
 	return eval(0, nr_token - 1, success);
 }
