@@ -62,7 +62,8 @@ static struct rule
 	{"&&", AND},
 	{"\\|\\|", OR},
 	{"&", '&'},
-	{"\\|", '|'}
+	{"\\|", '|'},
+	{"\\^", '^'}
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]))
