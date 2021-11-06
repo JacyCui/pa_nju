@@ -14,7 +14,8 @@ enum
 {
 	NOTYPE = 256,
 	EQ,
-	NUM,
+	DEC_NUM,
+	HEX_NUM,
 	REG,
 	SYMB
 
@@ -33,7 +34,16 @@ static struct rule
 	 */
 
 	{" +", NOTYPE}, // white space
+	{"[1-9][0-9]*", DEC_NUM}, // decimal number
+	{"0[xX][0-9a-fA-F]+", HEX_NUM}, // heximal number
 	{"\\+", '+'},
+	{"-", '-'},
+	{"\\*", '*'},
+	{"/", '/'},
+	{"\\$[a-z]{2,3}", REG},
+	{"[a-z][a-z0-9]*", SYMB},
+	{"\\(", '('},
+	{"\\)", ')'}
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]))
