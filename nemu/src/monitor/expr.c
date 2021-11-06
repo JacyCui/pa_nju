@@ -125,7 +125,6 @@ static bool make_token(char *e)
 				    }
 				    else {
 				        tokens[nr_token++].type = NEG;
-				        printf("neg\n");
 				    }
 				    break;
 				case '*':
@@ -134,7 +133,6 @@ static bool make_token(char *e)
 				    }
 				    else {
 				        tokens[nr_token++].type = DE_REF;
-				        printf("deref\n");
 				    }
 				    break;
 				case DEC_NUM:
@@ -142,11 +140,10 @@ static bool make_token(char *e)
 				case REG:
 				case SYMB:
 				    strncpy(tokens[nr_token].str, substr_start, substr_len);
-				    tokens[nr_token].str[substr_len] = '\0';
+				    // tokens[nr_token].str[substr_len] = '\0';
 				    printf("debug: %s\n", tokens[nr_token].str);
 				default:
 					tokens[nr_token++].type = rules[i].token_type;
-					printf("here\n");
 				}
 
 				break;
