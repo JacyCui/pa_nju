@@ -275,6 +275,7 @@ uint32_t eval(int p, int q, bool *success) {
                     *success = false;
                 }
                 break;
+            case SYMB: result = look_up_symtab(tokens[p].str, success); break;
             default: result = 0; *success = false;
         }
         return result;
