@@ -320,7 +320,7 @@ uint32_t eval(int p, int q, bool *success) {
         else {
             switch (tokens[p].type) {
                 case NEG: return -eval(p + 1, q, success);
-                case DE_REF: return vaddr_read(eval(p + 1, q, success), 0, 1);
+                case DE_REF: return vaddr_read(eval(p + 1, q, success), 0, 4);
                 case '!': return !eval(p + 1, q, success);
                 case '~': return ~eval(p + 1, q, success);
                 default: *success = false; return 0;
