@@ -14,6 +14,7 @@ enum
 {
 	NOTYPE = 256,
 	EQ,
+	NEQ,
 	MORE_EQ,
 	LESS_EQ,
 	DEC_NUM,
