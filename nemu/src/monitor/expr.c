@@ -252,9 +252,9 @@ uint32_t eval(int p, int q, bool *success) {
     }
     else if (p == q) {
         uint32_t result;
-        case (tokens[p].type) {
-            DEC_NUM: sscanf(tokens[p].str, "%d", &result);
-            HEX_NUM: sscanf(tokens[p].str, "%x", &result);
+        switch (tokens[p].type) {
+            case DEC_NUM: sscanf(tokens[p].str, "%d", &result);
+            case HEX_NUM: sscanf(tokens[p].str, "%x", &result);
             default: result = 0; *success = false;
         }
         return result;
@@ -265,15 +265,15 @@ uint32_t eval(int p, int q, bool *success) {
     else {
         if (get_priority(tokens[p].type) != -1) {
             switch (tokens[p].type) {
-                case NEG: return -eval(p + 1, q);
-                case DE_REF: return vaddr_read(eval(p + 1, q), 0, 1);
-                case '!': return !eval(p + 1, q);
-                case '~': return ~eval(p + 1, q);
+                case NEG: return -eval(p + 1, q, success);
+                case DE_REF: return vaddr_read(eval(p + 1, q, success), 0, 1);
+                case '!': return !eval(p + 1, q, success);
+                case '~': return ~eval(p + 1, q, success);
                 default: *success = false; return 0;
             }
         }
         else {
-            op = dominant_operator(p, q, success);
+            int op = dominant_operator(p, q, success);
             uint32_t val1 = eval(p, op - 1, success);
             uint32_t val2 = eval(op + 1, q, success);
             switch (tokens[op].type) {
