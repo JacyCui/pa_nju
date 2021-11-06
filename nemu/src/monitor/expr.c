@@ -70,15 +70,14 @@ int get_priority(int type) {
     switch (type) {
         case OR: return 0;
         case AND: return 1;
-        case '!': return 2;
-        case EQ: case NEQ: case '<': case '>': case MORE_EQ: case LESS_EQ: return 3;
-        case '%': return 4;
-        case '+': case '-': return 5;
-        case '*': case '/': return 6;
-        case '^': return 7;
-        case '|': return 8;
-        case '&': return 9;
-        case NEG: case DE_REF: case '~': return 10;
+        case EQ: case NEQ: case '<': case '>': case MORE_EQ: case LESS_EQ: return 2;
+        case '%': return 3;
+        case '+': case '-': return 4;
+        case '*': case '/': return 5;
+        case '^': return 6;
+        case '|': return 7;
+        case '&': return 8;
+        case '!': case NEG: case DE_REF: case '~': return 100;
         default: return -1;
     }
 }
@@ -212,7 +211,7 @@ bool check_parentheses(int p, int q, bool* success) {
     }
 }
 
-int dominant_operator(int p, int q, bool* success) {
+int dominant_operator(int p, int q) {
     int split = -1;
     bool valid = true, first = true;
     for (int i = p; i <= q; i++) {
@@ -224,15 +223,12 @@ int dominant_operator(int p, int q, bool* success) {
             valid = true;
             continue;
         }
-        if (valid && get_priority(tokens[i].type) != -1) {
+        if (valid && (get_priority(tokens[i].type) != -1 || get_priority(tokens[i].type) != 100)) {
             if (first || get_priority(tokens[i].type) <= get_priority(tokens[split].type)) {
                 split = i;
                 first = false;
             }
         }
-    }
-    if (split == -1) {
-        *success = false;
     }
     return split;
 }
@@ -255,17 +251,8 @@ uint32_t eval(int p, int q, bool *success) {
         return eval(p + 1, q - 1, success);
     }
     else {
-        if (get_priority(tokens[p].type) != -1) {
-            switch (tokens[p].type) {
-                case NEG: return -eval(p + 1, q, success);
-                case DE_REF: return vaddr_read(eval(p + 1, q, success), 0, 1);
-                case '!': return !eval(p + 1, q, success);
-                case '~': return ~eval(p + 1, q, success);
-                default: *success = false; return 0;
-            }
-        }
-        else {
-            int op = dominant_operator(p, q, success);
+        int op = dominant_operator(p, q);
+        if (op != -1) {
             uint32_t val1 = eval(p, op - 1, success);
             uint32_t val2 = eval(op + 1, q, success);
             switch (tokens[op].type) {
@@ -285,6 +272,14 @@ uint32_t eval(int p, int q, bool *success) {
                 case '^': return val1 ^ val2;
                 case '|': return val1 | val2;
                 case '&': return val1 & val2;
+                default: *success = false; return 0;
+        }
+        else {
+            switch (tokens[p].type) {
+                case NEG: return -eval(p + 1, q, success);
+                case DE_REF: return vaddr_read(eval(p + 1, q, success), 0, 1);
+                case '!': return !eval(p + 1, q, success);
+                case '~': return ~eval(p + 1, q, success);
                 default: *success = false; return 0;
             }
         }
