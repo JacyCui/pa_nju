@@ -134,7 +134,7 @@ static bool make_token(char *e)
 				char *substr_start = e + position;
 				int substr_len = pmatch.rm_eo;
 
-				printf("match regex[%d] at position %d with len %d: %.*s\n", i, position, substr_len, substr_len, substr_start);
+				// printf("match regex[%d] at position %d with len %d: %.*s\n", i, position, substr_len, substr_len, substr_start);
 				position += substr_len;
 
 				/* TODO: Now a new token is recognized with rules[i]. 
@@ -166,7 +166,6 @@ static bool make_token(char *e)
 				case SYMB:
 				    strncpy(tokens[nr_token].str, substr_start, substr_len);
 				    tokens[nr_token].str[substr_len] = '\0';
-				    // printf("debug: %s\n", tokens[nr_token].str);
 				default:
 					tokens[nr_token++].type = rules[i].token_type;
 				}
@@ -246,6 +245,30 @@ uint32_t eval(int p, int q, bool *success) {
             case REG: 
                 if (strcmp(tokens[p].str, "$eip") == 0) {
                     result = cpu.eip;
+                }
+                else if (strcmp(tokens[p].str, "$eax") == 0) {
+                    result = cpu.eax;
+                }
+                else if (strcmp(tokens[p].str, "$ecx") == 0) {
+                    result = cpu.ecx;
+                }
+                else if (strcmp(tokens[p].str, "$edx") == 0) {
+                    result = cpu.edx;
+                }
+                else if (strcmp(tokens[p].str, "$ebx") == 0) {
+                    result = cpu.ebx;
+                }
+                else if (strcmp(tokens[p].str, "$esp") == 0) {
+                    result = cpu.esp;
+                }
+                else if (strcmp(tokens[p].str, "$ebp") == 0) {
+                    result = cpu.ebp;
+                }
+                else if (strcmp(tokens[p].str, "$esi") == 0) {
+                    result = cpu.esi;
+                }
+                else if (strcmp(tokens[p].str, "$edi") == 0) {
+                    result = cpu.edi;
                 }
                 else {
                     result = 0;
