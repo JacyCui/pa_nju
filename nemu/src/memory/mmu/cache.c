@@ -36,7 +36,7 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
                 }
 	        }
 	        else {
-	            memcpy(chache[i].block + addr_state.block, &data, len);
+	            memcpy(cache[i].block + addr_state.block, &data, len);
 	        }
 	    }
 	}
