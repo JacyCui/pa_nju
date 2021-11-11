@@ -1,9 +1,15 @@
 #include "memory/mmu/cache.h"
 
+#ifdef CACHE_ENABLED
+
+CacheLine cache[CATCHE_LINES];
+
 // init the cache
 void init_cache()
 {
-	// implement me in PA 3-1
+	for (int i = 0; i < CATCHE_LINES; i++) {
+	    cache[i].valid_bit = 0;
+	}
 }
 
 // write data to cache
@@ -15,7 +21,11 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 // read data from cache
 uint32_t cache_read(paddr_t paddr, size_t len)
 {
-	// implement me in PA 3-1
+    PADDR
+	for (int i = 0; i < CATCHE_LINES; i++) {
+	    if (cache[i].valid_bit && cache[i].tag == )
+	}
 	return 0;
 }
 
+#endif

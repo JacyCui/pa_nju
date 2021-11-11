@@ -5,6 +5,28 @@
 
 #ifdef CACHE_ENABLED
 
+#define CATCHE_LINES 1024
+
+typedef union {
+	struct
+	{
+		uint32_t tag : 19;
+		uint32_t group : 7;
+		uint32_t block : 6;
+	};
+	uint32_t val;
+} PADDR_STATUS;
+
+typedef struct {
+    union {
+        struct {
+            uint32_t valid_bit : 1;
+            uint32_t tag : 19;
+        };
+    };
+    uint8_t block[64];
+} CacheLine;
+
 // init the cache
 void init_cache();
 
