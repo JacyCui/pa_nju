@@ -1,5 +1,6 @@
 #include "memory/mmu/cache.h"
 #include "memory/memory.h"
+#include <stdlib.h>
 
 #ifdef CACHE_ENABLED
 
