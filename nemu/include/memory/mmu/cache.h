@@ -6,13 +6,14 @@
 #ifdef CACHE_ENABLED
 
 #define CATCHE_LINES 1024
+#define CATCHE_WIDTH 64
 
 typedef union {
 	struct
 	{
-		uint32_t tag : 19;
-		uint32_t group : 7;
 		uint32_t block : 6;
+        uint32_t group : 7;
+		uint32_t tag : 19;
 	};
 	uint32_t val;
 } PADDR_STATUS;
@@ -24,7 +25,7 @@ typedef struct {
             uint32_t tag : 19;
         };
     };
-    uint8_t block[64];
+    uint8_t block[CATCHE_WIDTH];
 } CacheLine;
 
 // init the cache
