@@ -23,8 +23,7 @@ uint32_t paddr_read(paddr_t paddr, size_t len)
 {
 	uint32_t ret = 0;
 #ifdef CACHE_ENABLED
-	    ret = cache_read(paddr, len);     // 通过cache进行读
-	    printf("\n\n\n cache_read \n\n\n");
+	    ret = cache_read(paddr, len);     // read through cache
 #else
 	    ret = hw_mem_read(paddr, len);
 #endif
@@ -34,8 +33,7 @@ uint32_t paddr_read(paddr_t paddr, size_t len)
 void paddr_write(paddr_t paddr, size_t len, uint32_t data)
 {
 #ifdef CACHE_ENABLED
-		cache_write(paddr, len, data);    // 通过cache进行写
-		printf("\n\n\n cache_write \n\n\n");
+		cache_write(paddr, len, data);    // write through cache
 #else
 		hw_mem_write(paddr, len, data);
 #endif
