@@ -99,6 +99,7 @@ typedef struct
 
 #ifdef IA32_SEG
 	GDTR gdtr; // GDTR, todo: define type GDTR
+	
 	// segment registers, todo: define type SegReg
 	union {
 		SegReg segReg[6];
@@ -107,6 +108,7 @@ typedef struct
 			SegReg es, cs, ss, ds, fs, gs;
 		};
 	};
+	
 	// control registers, todo: define type CR0
 	CR0 cr0;
 #else
