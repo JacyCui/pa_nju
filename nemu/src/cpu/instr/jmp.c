@@ -38,4 +38,26 @@ make_instr_func(jmp_near_indirect) {
     return 0;
 }
 
+make_instr_func(ljmp) {
+    opr_src.type = OPR_IMM;
+	opr_src.sreg = SREG_CS;
+	opr_src.addr = eip + 1;
+	opr_src.data_size = data_size;
+	
+	opr_dest.type = OPR_IMM;
+	opr_dest.sreg = SREG_CS;
+	opr_dest.addr = eip + 1 + data_size / 8;
+	opr_dest.data_size = 16;
+	
+	operand_read(&opr_src);
+	operand_read(&opr_dest);
+	
+	print_asm_2("ljmp", "", 3 + data_size / 8, &opr_dest, &opr_src);
+	
+	cpu.eip = opr_src.val;
+	cpu.cs.val = opr_dest.val;
+
+    return 0;
+}
+
 

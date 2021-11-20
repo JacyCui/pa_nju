@@ -6,4 +6,6 @@ make_instr_func(jmp_i_short_);
 
 make_instr_func(jmp_near_indirect);
 
+make_instr_func(ljmp);
+
 #endif
