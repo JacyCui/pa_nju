@@ -78,8 +78,14 @@ make_instr_func(mov_srm162r_l) {
 }
 
 make_instr_func(mov_rm2s_w) {
-    
-    return 0;
+    int len = 1;
+    decode_data_size_w
+    decode_operand_rm2r
+    operand_read(&opr_src);
+    uint8_t sreg = opr_dest.addr;
+    cpu.segReg[sreg].val = opr_src.val;
+    load_sreg(sreg);
+    return len;
 }
 
 
