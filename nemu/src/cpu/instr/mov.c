@@ -76,3 +76,10 @@ make_instr_func(mov_srm162r_l) {
 	print_asm_2("mov", "", len, &rm, &r);
         return len;
 }
+
+make_instr_func(mov_rm2s_w) {
+    
+}
+
+
+
