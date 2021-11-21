@@ -17,19 +17,11 @@ void load_sreg(uint8_t sreg)
 	 * The visible part of 'sreg' should be assigned by mov or ljmp already.
 	 */
 	if (!cpu.segReg[sreg].ti) { // for gdt
-	    printf("here10\n");
 	    SegDesc* gdt = (SegDesc*)(hw_mem + cpu.gdtr.base) + cpu.segReg[sreg].index;
-	    printf("here11\n");
-	    printf("%x %x %x", gdt->base_31_24, gdt->base_23_16, gdt->base_15_0);
 	    cpu.segReg[sreg].base = (gdt->base_31_24 << 24) + (gdt->base_23_16 << 16) + gdt->base_15_0;
-	    printf("here12\n");
 	    cpu.segReg[sreg].limit = (gdt->limit_19_16 << 16) + gdt->limit_15_0;
-	    printf("here13\n");
 	    cpu.segReg[sreg].soft_use = gdt->soft_use;
-	    printf("here14\n");
 	    cpu.segReg[sreg].type = (gdt->segment_type << 4) + gdt->type;
-	    printf("here15\n");
 	    cpu.segReg[sreg].privilege_level = gdt->privilege_level;
-	    printf("here16\n");
 	}
 }
