@@ -89,6 +89,7 @@ make_instr_func(mov_rm2s_w) {
         cpu.segReg[sreg].val = rm.val;
         printf("here2\n");
         load_sreg(sreg);
+        printf("here3\n");
         return len;
 }
 
