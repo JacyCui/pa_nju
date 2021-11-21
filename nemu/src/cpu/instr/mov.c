@@ -99,10 +99,7 @@ make_instr_func(mov_c2r_l) {
     operand_read(&rm);
     uint8_t creg = r.addr;
     switch (creg) {
-        case 0: { 
-            rm.val = cpu.cr0.val;
-            printf("mov_c2r_l\n");
-        }
+        case 0: rm.val = cpu.cr0.val; break;
     }
     operand_write(&rm);
     return len;
@@ -117,10 +114,7 @@ make_instr_func(mov_r2c_l) {
     operand_read(&rm);
     uint8_t creg = r.addr;
     switch (creg) {
-        case 0: {
-            cpu.cr0.val = rm.val;
-            printf("mov_r2c_l\n");
-        }
+        case 0: cpu.cr0.val = rm.val; break;
     }
     return len;
 }
