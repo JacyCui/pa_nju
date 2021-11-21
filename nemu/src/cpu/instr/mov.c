@@ -78,17 +78,51 @@ make_instr_func(mov_srm162r_l) {
 }
 
 make_instr_func(mov_rm2s_w) {
-        int len = 1;
-        OPERAND r, rm;
-        r.data_size = 16;
-        rm.data_size = 16;
-        len += modrm_r_rm(eip + 1, &r, &rm);
-        operand_read(&rm);
-        uint8_t sreg = r.addr;
-        cpu.segReg[sreg].val = rm.val;
-        load_sreg(sreg);
-        printf("here3\n");
-        return len;
+    int len = 1;
+    OPERAND r, rm;
+    r.data_size = 16;
+    rm.data_size = 16;
+    len += modrm_r_rm(eip + 1, &r, &rm);
+    operand_read(&rm);
+    uint8_t sreg = r.addr;
+    cpu.segReg[sreg].val = rm.val;
+    load_sreg(sreg);
+    return len;
+}
+
+make_instr_func(mov_c2r_l) {
+    int len = 1;
+    OPERAND r, rm;
+    r.data_size = 32;
+    rm.data_size = 32;
+    len += modrm_r_rm(eip + 1, &r, &rm);
+    operand_read(&rm);
+    uint8_t creg = r.addr;
+    switch (creg) {
+        case 0: { 
+            rm.val = cpu.cr0;
+            printf("mov_c2r_l\n");
+        }
+    }
+    operand_write(&rm);
+    return len;
+}
+
+make_instr_func(mov_r2c_l) {
+    int len = 1;
+    OPERAND r, rm;
+    r.data_size = 32;
+    rm.data_size = 32;
+    len += modrm_r_rm(eip + 1, &r, &rm);
+    operand_read(&rm);
+    uint8_t creg = r.addr;
+    switch (creg) {
+        case 0: {
+            cpu.cr0 = rm.val;
+            printf("mov_r2c_l\n");
+        }
+    }
+    return len;
 }
 
 
