@@ -78,14 +78,16 @@ make_instr_func(mov_srm162r_l) {
 }
 
 make_instr_func(mov_rm2s_w) {
-    int len = 1;
-    decode_data_size_w
-    decode_operand_rm2r
-    operand_read(&opr_src);
-    uint8_t sreg = opr_dest.addr;
-    cpu.segReg[sreg].val = opr_src.val;
-    load_sreg(sreg);
-    return len;
+        int len = 1;
+        OPERAND r, rm;
+        r.data_size = 16;
+        rm.data_size = 16;
+        len += modrm_r_rm(eip + 1, &r, &rm);
+        operand_read(&rm);
+        uint8_t sreg = r.addr;
+        cpu.segReg[sreg].val = rm.val;
+        load_sreg(uint8_t sreg);
+        return len;
 }
 
 
