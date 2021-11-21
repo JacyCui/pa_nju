@@ -20,6 +20,7 @@ void load_sreg(uint8_t sreg)
 	    printf("here10\n");
 	    SegDesc* gdt = (SegDesc*)(cpu.gdtr.base) + cpu.segReg[sreg].index;
 	    printf("here11\n");
+	    printf("%x %x %x", gdt->base_31_24, gdt->base_23_16, gdt->base_15_0);
 	    cpu.segReg[sreg].base = (gdt->base_31_24 << 24) + (gdt->base_23_16 << 16) + gdt->base_15_0;
 	    printf("here12\n");
 	    cpu.segReg[sreg].limit = (gdt->limit_19_16 << 16) + gdt->limit_15_0;
