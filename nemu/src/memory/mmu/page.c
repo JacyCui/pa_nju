@@ -18,7 +18,7 @@ paddr_t page_translate(laddr_t laddr)
 	    assert(0);
 	}
 	PTE* pte = (PTE*)(hw_mem + (pde->page_frame << 12)) + laddr_status.page;
-	printf("%x \n", (void*)pte - (void*)hw_mem);
+	printf("%x \n", (uint8_t*)pte - (uint8_t*)hw_mem);
 	if (!pte->present) {
 	    printf("\nPage Not Present\n");
 	    fflush(stdout);
