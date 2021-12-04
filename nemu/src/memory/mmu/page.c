@@ -5,9 +5,9 @@
 paddr_t page_translate(laddr_t laddr)
 {
 #ifndef TLB_ENABLED
-	printf("\nPlease implement page_translate()\n");
-	fflush(stdout);
-	assert(0);
+// 	printf("\nPlease implement page_translate()\n");
+// 	fflush(stdout);
+// 	assert(0);
 	LADDR_STATUS laddr_status;
 	laddr_status.val = laddr;
 	PDE* pde = (PDE*)(hw_mem + cpu.cr3.pdbr);
