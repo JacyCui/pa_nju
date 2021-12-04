@@ -10,20 +10,19 @@ paddr_t page_translate(laddr_t laddr)
 // 	assert(0);
 	LADDR_STATUS laddr_status;
 	laddr_status.val = laddr;
-	PDE* pde = (PDE*)(hw_mem + cpu.cr3.pdbr);
+	PDE* pde = (PDE*)(hw_mem + (cpu.cr3.pdbr << 12));
 	if (!pde[laddr_status.dir].present) {
 	    printf("\nPage Table Not Present\n");
 	    fflush(stdout);
 	    assert(0);
 	}
-	PTE* pte = (PTE*)(hw_mem + pde[laddr_status.dir].page_frame);
+	PTE* pte = (PTE*)(hw_mem + (pde[laddr_status.dir].page_frame << 12));
 	if (!pte[laddr_status.page].present) {
 	    printf("\nPage Not Present\n");
 	    fflush(stdout);
 	    assert(0);
 	}
-	paddr_t* page_frame = (paddr_t*)(hw_mem + pte[laddr_status.page].page_frame);
-	return page_frame[laddr_status.offset];
+	return (pte[laddr_status.page].page_frame << 12) + laddr_status.offset;
 #else
 	return tlb_read(laddr) | (laddr & PAGE_MASK);
 #endif
