@@ -11,6 +11,17 @@
 
 #define PAGE_MASK (PAGE_SIZE - 1)
 
+typedef union {
+	struct
+	{
+		uint32_t offset : 12;
+        uint32_t page : 10;
+		uint32_t dir : 10;
+	};
+	uint32_t val;
+} LADDR_STATUS;
+
+
 /* force the data to be aligned with page boundary.
    statically defined page tables uses this feature. */
 #define align_to_page __attribute((aligned(PAGE_SIZE)))
