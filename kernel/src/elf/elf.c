@@ -34,13 +34,13 @@ uint32_t loader()
 	eph = ph + elf->e_phnum;
 	for (; ph < eph; ph++)
 	{
+#ifdef IA32_PAGE
+        mm_malloc(ph->p_vaddr, ph->p_memsz);
+#endif
 		if (ph->p_type == PT_LOAD)
 		{
 			// remove this panic!!!
 			// panic("Please implement the loader");
-#ifdef IA32_PAGE
-            mm_malloc(ph->p_vaddr, ph->p_memsz);
-#endif
 
 /* TODO: copy the segment from the ELF file to its proper memory area */
             memcpy((void *)ph->p_vaddr, (void *)ph->p_offset, ph->p_filesz);
@@ -64,9 +64,11 @@ uint32_t loader()
 
 #ifdef IA32_PAGE
 	mm_malloc(KOFFSET - STACK_SIZE, STACK_SIZE);
+	
 #ifdef HAS_DEVICE_VGA
 	create_video_mapping();
 #endif
+
 	write_cr3(get_ucr3());
 #endif
 	return entry;
