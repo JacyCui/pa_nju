@@ -18,11 +18,11 @@ paddr_t page_translate(laddr_t laddr)
 	    assert(0);
 	}
 	PTE* pte = (PTE*)(hw_mem + (pde[laddr_status.dir].page_frame << 12));
-	if (!pte[laddr_status.page].present) {
-	    printf("\nPage Not Present\n");
-	    fflush(stdout);
-	    assert(0);
-	}
+// 	if (!pte[laddr_status.page].present) {
+// 	    printf("\nPage Not Present\n");
+// 	    fflush(stdout);
+// 	    assert(0);
+// 	}
 	return (pte[laddr_status.page].page_frame << 12) + laddr_status.offset;
 #else
 	return tlb_read(laddr) | (laddr & PAGE_MASK);
