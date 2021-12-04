@@ -22,7 +22,7 @@ paddr_t page_translate(laddr_t laddr)
 	    fflush(stdout);
 	    assert(0);
 	}
-	paddr_t* page_frame = pte[laddr_status.page].page_frame;
+	paddr_t* page_frame = (paddr_t*)(hw_mem + pte[laddr_status.page].page_frame);
 	return page_frame[laddr_status.offset];
 #else
 	return tlb_read(laddr) | (laddr & PAGE_MASK);
