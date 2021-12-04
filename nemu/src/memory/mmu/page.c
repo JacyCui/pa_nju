@@ -8,6 +8,7 @@ paddr_t page_translate(laddr_t laddr)
 // 	printf("\nPlease implement page_translate()\n");
 // 	fflush(stdout);
 // 	assert(0);
+    printf("debug: here \n");
 	LADDR_STATUS laddr_status;
 	laddr_status.val = laddr;
 	PDE* pde = (PDE*)(hw_mem + (cpu.cr3.pdbr << 12));
