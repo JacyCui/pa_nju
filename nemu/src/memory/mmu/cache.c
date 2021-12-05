@@ -32,7 +32,7 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
                 size_t left = len - cur;
                 for (int j = next_gp; j < next_gp + 8; j++) {
                     if (cache[j].valid_bit && cache[j].tag == addr_state.tag) {
-                        memcpy(cache[j].block, &data, left);
+                        memcpy(cache[j].block, (uint8_t*)&data + cur, left);
                     }
                 }
 	        }
