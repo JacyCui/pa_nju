@@ -4,7 +4,7 @@
 
 #ifdef CACHE_ENABLED
 
-CacheLine cache[CATCHE_LINES];
+CacheLine cache[CATCHE_LINES]; // define cache
 
 // init the cache
 void init_cache()
