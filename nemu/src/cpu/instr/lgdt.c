@@ -17,9 +17,8 @@ make_instr_func(lgdt) {
     opr_src.data_size = 32;
     operand_read(&opr_src);
     uint32_t raw_base = opr_src.val;
-
     cpu.gdtr.base = data_size == 32 ? raw_base : raw_base & 0x00ffffff;
-    print_asm_1("lgdt", "l", len, &opr_src);
     
+    print_asm_1("lgdt", "l", len, &opr_src);
     return len;
 }
