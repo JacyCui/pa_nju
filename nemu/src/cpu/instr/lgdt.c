@@ -7,7 +7,7 @@ make_instr_func(lgdt) {
     int len = 1;
     decode_operand_rm
     decode_data_size_v
-    operand_read(opr_src);
+    operand_read(&opr_src);
     
     cpu.gdtr.limit = paddr_read(opr_src.val, 2);
     print_asm_1("lgdt", "l", len, &opr_src);
