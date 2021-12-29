@@ -8,6 +8,8 @@ void raise_intr(uint8_t intr_no)
 	printf("Please implement raise_intr()");
 	fflush(stdout);
 	assert(0);
+	// GateDesc* idt = (GateDesc*)(hw_mem + cpu.idtr.base) + intr_no;
+    
 #endif
 }
 
