@@ -37,7 +37,7 @@ void raise_intr(uint8_t intr_no)
     // Clear IF if it is an interrupt
     if (idt->type == 0xe) {
         cpu.eflags.IF = 0;
-    }    
+    }
     
     // Set CS:EIP to the entry of the interrupt handler
     cpu.cs.val = idt->selector;
