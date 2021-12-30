@@ -23,5 +23,6 @@ void load_sreg(uint8_t sreg)
 	    cpu.segReg[sreg].soft_use = gdt->soft_use;
 	    cpu.segReg[sreg].type = (gdt->segment_type << 4) + gdt->type;
 	    cpu.segReg[sreg].privilege_level = gdt->privilege_level;
+	    printf("here\n");
 	}
 }
