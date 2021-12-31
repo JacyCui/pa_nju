@@ -8,8 +8,6 @@ Special note for `int': please use the instruction name `int_' instead of `int'.
 */
 
 make_instr_func(int_) {
-    int len = 1;
-    
     // get intr_no
     decode_data_size_b
     decode_operand_i
@@ -17,6 +15,6 @@ make_instr_func(int_) {
     
     raise_sw_intr(opr_src.val);
     
-    return len;
+    return 0;
 }
 
