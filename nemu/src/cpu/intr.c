@@ -10,11 +10,11 @@ void raise_intr(uint8_t intr_no)
 // 	assert(0);
 
     // push eflags
-    push(cpu.eflags.val, 32);
+    push(cpu.eflags.val);
 	// push CS
-    push(cpu.cs.val, 16);
+    push(cpu.cs.val);
     // push eip
-    push(cpu.eip, 32);
+    push(cpu.eip);
     
     // Find the IDT entry using 'intr_no'
 	paddr_t paddr;

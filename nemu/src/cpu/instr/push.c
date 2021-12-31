@@ -3,7 +3,7 @@
 Put the implementations of 'push' instructions here.
 */
 
-void push(uint32_t val, uint8_t data_size) {
+void push(uint32_t val) {
     // refresh esp
     cpu.esp -= data_size / 8;
     // fetch dest
@@ -17,16 +17,9 @@ void push(uint32_t val, uint8_t data_size) {
 
 static void instr_execute_1op() 
 {
-    // refresh esp
-    cpu.esp -= data_size / 8;
-    // fetch dest
-    opr_dest.type = OPR_MEM;
-    opr_dest.addr = cpu.esp;
-    opr_dest.data_size = data_size;
     // src to dest
     operand_read(&opr_src);
-    opr_dest.val = sign_ext(opr_src.val, opr_src.data_size);
-    operand_write(&opr_dest);
+    push(sign_ext(opr_src.val, opr_src.data_size));
 }
 
 make_instr_impl_1op(push, i, b);
