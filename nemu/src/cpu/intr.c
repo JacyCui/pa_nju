@@ -9,11 +9,9 @@ void raise_intr(uint8_t intr_no)
 // 	fflush(stdout);
 // 	assert(0);
 
-    // push eflags
+    // reserve: push eflags, CS,  eip
     push(cpu.eflags.val);
-	// push CS
     push(cpu.cs.val);
-    // push eip
     push(cpu.eip);
     
     // Find the IDT entry using 'intr_no'
