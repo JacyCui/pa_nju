@@ -32,7 +32,14 @@ void raise_intr(uint8_t intr_no)
     operand_write(&opr_dest);
     
     // Find the IDT entry using 'intr_no'
-	GateDesc* idt = (GateDesc*)(hw_mem + cpu.idtr.base) + intr_no;
+	paddr_t paddr;
+    if (cpu.cr0.pg) {
+        paddr = page_translate(cpu.idtr.base);
+    }
+    else {
+        paddr = cpu.idtr.base;
+    }
+	GateDesc* idt = (GateDesc*)(hw_mem + paddr) + intr_no;
     
     // Clear IF if it is an interrupt
     if (idt->type == 0xe) {
