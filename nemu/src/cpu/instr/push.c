@@ -38,6 +38,7 @@ make_instr_func(pusha) {
     push(cpu.ebp);
     push(cpu.esi);
     push(cpu.edi);
+    return 1;
 }
 
 
