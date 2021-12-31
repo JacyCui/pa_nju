@@ -28,6 +28,18 @@ make_instr_impl_1op(push, i, v);
 make_instr_impl_1op(push, r, v);
 make_instr_impl_1op(push, rm, v);
 
+make_instr_func(pusha) {
+    uint32_t temp = cpu.esp;
+    push(cpu.eax);
+    push(cpu.ecx);
+    push(cpu.edx);
+    push(cpu.ebx);
+    push(temp);
+    push(cpu.ebp);
+    push(cpu.esi);
+    push(cpu.edi);
+}
+
 
 
 
