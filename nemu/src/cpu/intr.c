@@ -14,7 +14,7 @@ void raise_intr(uint8_t intr_no)
 	// push CS
     push(cpu.cs.val, 16);
     // push eip
-    push(cpu.eip.val, 32);
+    push(cpu.eip, 32);
     
     // Find the IDT entry using 'intr_no'
 	paddr_t paddr;
