@@ -17,8 +17,16 @@ void push(uint32_t val, uint8_t data_size) {
 
 static void instr_execute_1op() 
 {
+    // refresh esp
+    cpu.esp -= data_size / 8;
+    // fetch dest
+    opr_dest.type = OPR_MEM;
+    opr_dest.addr = cpu.esp;
+    opr_dest.data_size = data_size;
+    // src to dest
     operand_read(&opr_src);
-    push(sign_ext(opr_src.val, opr_src.data_size), opr_dest.data_size);
+    opr_dest.val = sign_ext(opr_src.val, opr_src.data_size);
+    operand_write(&opr_dest);
 }
 
 make_instr_impl_1op(push, i, b);
