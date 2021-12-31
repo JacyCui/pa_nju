@@ -4,7 +4,7 @@
 Put the declarations of `push' instructions here.
 */
 
-void push(uint32_t val, uint8_t data_size);
+void push(uint32_t val);
 
 make_instr_func(push_i_b);
 make_instr_func(push_i_v);
