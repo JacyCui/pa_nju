@@ -8,6 +8,7 @@ void push(uint32_t val) {
     cpu.esp -= data_size / 8;
     // fetch dest
     opr_dest.type = OPR_MEM;
+    opr_dest.sreg = SREG_DS;
     opr_dest.addr = cpu.esp;
     opr_dest.data_size = data_size;
     // val to dest
