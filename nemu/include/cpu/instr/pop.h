@@ -4,6 +4,8 @@
 Put the declarations of `pop' instructions here.
 */
 
+uint32_t pop()
+
 make_instr_func(pop_r_v);
 
 #endif
