@@ -5,7 +5,7 @@ Put the implementations of `iret' instructions here.
 
 make_instr_func(iret) {
     // restore: pop eflags, CS,  eip
-    cpu.eip = pop();
+    // cpu.eip = pop();
     cpu.cs.val = pop();
     cpu.eflags.val = pop();
     // reload CS with load_sreg()
