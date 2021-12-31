@@ -3,18 +3,22 @@
 Put the implementations of 'push' instructions here.
 */
 
-static void instr_execute_1op() 
-{
+void push(uint32_t val, uint8_t data_size) {
     // refresh esp
     cpu.esp -= data_size / 8;
     // fetch dest
     opr_dest.type = OPR_MEM;
     opr_dest.addr = cpu.esp;
     opr_dest.data_size = data_size;
-    // src to dest
-    operand_read(&opr_src);
-    opr_dest.val = sign_ext(opr_src.val, opr_src.data_size);
+    // val to dest
+    opr_dest.val = val;
     operand_write(&opr_dest);
+}
+
+static void instr_execute_1op() 
+{
+    operand_read(&opr_src);
+    push(sign_ext(opr_src.val, opr_src.data_size), opr_dest.data_size);
 }
 
 make_instr_impl_1op(push, i, b);
@@ -22,3 +26,8 @@ make_instr_impl_1op(push, i, v);
 
 make_instr_impl_1op(push, r, v);
 make_instr_impl_1op(push, rm, v);
+
+
+
+
+

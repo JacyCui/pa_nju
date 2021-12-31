@@ -10,26 +10,11 @@ void raise_intr(uint8_t intr_no)
 // 	assert(0);
 
     // push eflags
-    cpu.esp -= 4;
-    opr_dest.type = OPR_MEM;
-    opr_dest.addr = cpu.esp;
-    opr_dest.data_size = 32;
-    opr_dest.val = cpu.eflags.val;
-    operand_write(&opr_dest);
+    push(cpu.eflags.val, 32);
 	// push CS
-    cpu.esp -= 4;
-    opr_dest.type = OPR_MEM;
-    opr_dest.addr = cpu.esp;
-    opr_dest.data_size = 32;
-    opr_dest.val = cpu.cs.val;
-    operand_write(&opr_dest);
+    push(cpu.cs.val, 16);
     // push eip
-    cpu.esp -= 4;
-    opr_dest.type = OPR_MEM;
-    opr_dest.addr = cpu.esp;
-    opr_dest.data_size = 32;
-    opr_dest.val = cpu.eip;
-    operand_write(&opr_dest);
+    push(cpu.eip.val, 32);
     
     // Find the IDT entry using 'intr_no'
 	paddr_t paddr;
