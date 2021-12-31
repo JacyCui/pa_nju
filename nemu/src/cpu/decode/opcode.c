@@ -52,7 +52,7 @@ instr_func opcode_entry[256] = {
     /* 0xc0 - 0xc3*/ group_2_b, group_2_v, ret_near_imm16, ret_near,
     /* 0xc4 - 0xc7*/ inv, inv, mov_i2rm_b, mov_i2rm_v,
     /* 0xc8 - 0xcb*/ inv, leave, inv, inv,
-    /* 0xcc - 0xcf*/ inv, int_, inv, iret,
+    /* 0xcc - 0xcf*/ inv, int_, inv, __ref_iret,
     /* 0xd0 - 0xd3*/ group_2_1b, group_2_1v, group_2_cb, group_2_cv,
     /* 0xd4 - 0xd7*/ inv, inv, inv, inv,
     /* 0xd8 - 0xdb*/ group_x87_d8, group_x87_d9, group_x87_da, group_x87_db,
