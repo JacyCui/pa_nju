@@ -63,7 +63,8 @@ uint32_t loader()
 	volatile uint32_t entry = elf->e_entry;
 
 #ifdef IA32_PAGE
-	uint32_t p = mm_malloc(KOFFSET - STACK_SIZE, STACK_SIZE);
+	// uint32_t p =
+	mm_malloc(KOFFSET - STACK_SIZE, STACK_SIZE);
 	// Log("line67: mm_malloc stack: paddr = 0x%x, vaddr = 0x%x, memsz = 0x%x", p, KOFFSET - STACK_SIZE, STACK_SIZE);
 
 #ifdef HAS_DEVICE_VGA
