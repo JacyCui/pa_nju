@@ -40,7 +40,7 @@ uint32_t loader()
 			// panic("Please implement the loader");
 #ifdef IA32_PAGE
             uint32_t paddr = mm_malloc(ph->p_vaddr, ph->p_memsz);
-            Log();
+            Log(mm_malloc);
 #endif
 /* TODO: copy the segment from the ELF file to its proper memory area */
             memcpy((void *)paddr, (void *)ph->p_offset, ph->p_filesz);
@@ -64,7 +64,7 @@ uint32_t loader()
 
 #ifdef IA32_PAGE
 	mm_malloc(KOFFSET - STACK_SIZE, STACK_SIZE);
-	Log();
+	Log(mm_malloc);
 #ifdef HAS_DEVICE_VGA
 	create_video_mapping();
 #endif
