@@ -50,7 +50,7 @@ uint32_t loader()
             ide_read((void *)paddr, ph->p_offset, ph->p_filesz);
 #endif
 /* TODO: zeror the memory area [vaddr + file_sz, vaddr + mem_sz) */
-            memset((void *)paddr + ph->p_filesz, 0, ph->p_memsz - ph->p_filesz);
+            // memset((void *)paddr + ph->p_filesz, 0, ph->p_memsz - ph->p_filesz);
 
 #ifdef IA32_PAGE
 			/* Record the program break for future use */
