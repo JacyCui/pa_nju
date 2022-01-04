@@ -48,6 +48,7 @@ uint32_t loader()
             memcpy((void *)paddr, (void *)ph->p_offset, ph->p_filesz);
 #else
             ide_read((void *)paddr, ph->p_offset, ph->p_filesz);
+            Log("paddr: %x, p_offset: %x, p_filesz: %x", paddr, ph->p_offset, ph->p_filesz);
 #endif
 /* TODO: zeror the memory area [vaddr + file_sz, vaddr + mem_sz) */
             memset((void *)paddr + ph->p_filesz, 0, ph->p_memsz - ph->p_filesz);
