@@ -43,14 +43,14 @@ uint32_t loader()
             // Log("line43: mm_malloc paddr = 0x%x, ph->p_vaddr = 0x%x, ph->p_memsz = 0x%x", paddr, ph->p_vaddr, ph->p_memsz);
 #endif
 
-#ifndef HAS_DEVICE_IDE
+#ifdef HAS_DEVICE_IDE
 /* TODO: copy the segment from the ELF file to its proper memory area */
             memcpy((void *)paddr, (void *)ph->p_offset, ph->p_filesz);
 #else
             ide_read((void *)paddr, ph->p_offset, ph->p_filesz);
 #endif
 /* TODO: zeror the memory area [vaddr + file_sz, vaddr + mem_sz) */
-            // memset((void *)paddr + ph->p_filesz, 0, ph->p_memsz - ph->p_filesz);
+            memset((void *)paddr + ph->p_filesz, 0, ph->p_memsz - ph->p_filesz);
 
 #ifdef IA32_PAGE
 			/* Record the program break for future use */
