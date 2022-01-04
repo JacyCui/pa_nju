@@ -3,7 +3,6 @@
 #include "string.h"
 
 #include <elf.h>
-#include <stdio.h>
 
 #ifdef HAS_DEVICE_IDE
 #define ELF_OFFSET_IN_DISK 0
@@ -42,7 +41,6 @@ uint32_t loader()
 #ifdef IA32_PAGE
             uint32_t paddr = mm_malloc(ph->p_vaddr, ph->p_memsz);
             // Log("line43: mm_malloc paddr = 0x%x, ph->p_vaddr = 0x%x, ph->p_memsz = 0x%x", paddr, ph->p_vaddr, ph->p_memsz);
-            printf("line43: mm_malloc paddr = 0x%x, ph->p_vaddr = 0x%x, ph->p_memsz = 0x%x", paddr, ph->p_vaddr, ph->p_memsz);
 #endif
 
 #ifndef HAS_DEVICE_IDE
