@@ -12,14 +12,14 @@ paddr_t page_translate(laddr_t laddr)
 	if (!pde->present) {
 	    printf("\nPage Table Not Present\n");
 	    fflush(stdout);
-	    assert(0);
+	    //assert(0);
 	}
 	PTE* pte = (PTE*)(hw_mem + (pde->page_frame << 12)) + laddr_status.page;
 
 	if (!pte->present) {
 	    printf("\nPage Not Present\n");
 	    fflush(stdout);
-	    assert(0);
+	    //assert(0);
 	}
 	return (pte->page_frame << 12) + laddr_status.offset;
 #else
