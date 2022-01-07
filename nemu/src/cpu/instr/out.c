@@ -5,11 +5,15 @@ Put the implementations of `out' instructions here.
 */
 
 make_instr_func(out_b) {
-    pio_write(cpu.edx & 0xffff, 1, cpu.eax & 0xff);
+    decode_operand_a
+    decode_data_size_b
+    pio_write(cpu.edx & 0xffff, 1, operand_read(&opr_src));
     return 1;
 }
 
 make_instr_func(out_v) {
-    pio_write(cpu.edx & 0xffff, data_size / 8, cpu.eax & (0xffffffff >> (32 - data_size)));
+    decode_operand_a
+    decode_data_size_v
+    pio_write(cpu.edx & 0xffff, data_size / 8, operand_read(&opr_src));
     return 1;
 }
