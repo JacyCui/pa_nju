@@ -37,7 +37,7 @@ uint32_t loader()
 	Log("%x", eph);
 	for (; ph < eph; ph++)
 	{
-	    Log("%x", ph);
+	    Log("%x", ph->ph_vaddr);
 		if (ph->p_type == PT_LOAD)
 		{
 			// remove this panic!!!
