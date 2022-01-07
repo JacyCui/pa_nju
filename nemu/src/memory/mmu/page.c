@@ -10,16 +10,16 @@ paddr_t page_translate(laddr_t laddr)
 
 	PDE* pde = (PDE*)(hw_mem + (cpu.cr3.pdbr << 12)) + laddr_status.dir;
 	if (!pde->present) {
-	    //printf("\nPage Table Not Present\n");
-	    //fflush(stdout);
-	    //assert(0);
+	    printf("\nPage Table Not Present\n");
+	    fflush(stdout);
+	    assert(0);
 	}
 	PTE* pte = (PTE*)(hw_mem + (pde->page_frame << 12)) + laddr_status.page;
 
 	if (!pte->present) {
-	    //printf("\nPage Not Present\n");
-	    //fflush(stdout);
-	    //assert(0);
+	    printf("\nPage Not Present\n");
+	    fflush(stdout);
+	    assert(0);
 	}
 	return (pte->page_frame << 12) + laddr_status.offset;
 #else
