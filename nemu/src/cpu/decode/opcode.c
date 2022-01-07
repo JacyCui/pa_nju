@@ -60,7 +60,7 @@ instr_func opcode_entry[256] = {
     /* 0xe0 - 0xe3*/ inv, inv, inv, jecxz_short_,
     /* 0xe4 - 0xe7*/ inv, inv, inv, inv,
     /* 0xe8 - 0xeb*/ call_i_near, jmp_i_near, ljmp, jmp_i_short_,
-    /* 0xec - 0xef*/ in_b, in_v, out_b, __ref_out_v,
+    /* 0xec - 0xef*/ in_b, __ref_in_v, out_b, out_v,
     /* 0xf0 - 0xf3*/ inv, break_point, inv, rep_repe,
     /* 0xf4 - 0xf7*/ hlt, inv, group_3_b, group_3_v,
     /* 0xf8 - 0xfb*/ clc, inv, cli, sti,
