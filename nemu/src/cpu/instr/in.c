@@ -12,7 +12,7 @@ make_instr_func(in_b) {
 
 make_instr_func(in_v) {
     decode_operand_a
-    decode_datasize_v
+    decode_data_size_v
     opr_src.val = pio_read(cpu.edx & 0xffff, data_size / 8);
     // cpu.eax = (cpu.eax & (0xffffffff << data_size)) + (port & (0xffffffff >> (32 - data_size)));
     operand_write(&opr_src);
