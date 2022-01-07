@@ -12,6 +12,6 @@ make_instr_func(in_b) {
 
 make_instr_func(in_v) {
     uint32_t port = pio_read(cpu.edx & 0xffff, data_size / 8);
-    cpu.eax = (cpu.eax & (0xffffffff << data_size)) + (port & (0xffffffff << (32 - data_size)));
+    cpu.eax = (cpu.eax & (0xffffffff << data_size)) + (port & (0xffffffff >> (32 - data_size)));
     return 1;
 }
