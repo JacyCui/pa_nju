@@ -43,7 +43,7 @@ uint32_t loader()
 			// panic("Please implement the loader");
 #ifdef IA32_PAGE
             uint32_t paddr = mm_malloc(ph->p_vaddr, ph->p_memsz);
-            Log("line43: mm_malloc paddr = 0x%x, ph->p_vaddr = 0x%x, ph->p_memsz = 0x%x", paddr, ph->p_vaddr, ph->p_memsz);
+            Log("mm_malloc paddr = 0x%x, ph->p_vaddr = 0x%x, ph->p_memsz = 0x%x", paddr, ph->p_vaddr, ph->p_memsz);
 #endif
 
 #ifndef HAS_DEVICE_IDE
@@ -72,7 +72,7 @@ uint32_t loader()
 #ifdef IA32_PAGE
 	// uint32_t p =
 	mm_malloc(KOFFSET - STACK_SIZE, STACK_SIZE);
-	// Log("line67: mm_malloc stack: paddr = 0x%x, vaddr = 0x%x, memsz = 0x%x", p, KOFFSET - STACK_SIZE, STACK_SIZE);
+	// Log("mm_malloc stack: paddr = 0x%x, vaddr = 0x%x, memsz = 0x%x", p, KOFFSET - STACK_SIZE, STACK_SIZE);
 
 #ifdef HAS_DEVICE_VGA
 	create_video_mapping();
