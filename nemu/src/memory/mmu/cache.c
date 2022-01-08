@@ -47,10 +47,6 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 uint32_t cache_read(paddr_t paddr, size_t len)
 {
     uint32_t ret = 0;
-    
-    memcpy(&ret, hw_mem + paddr, len);
-    return ret;
-    
     PADDR_STATUS addr_state;
     addr_state.val = paddr;
     int cur_gp = addr_state.group * 8, next_gp = cur_gp + 8;
@@ -58,15 +54,18 @@ uint32_t cache_read(paddr_t paddr, size_t len)
 	for (int i = cur_gp; i < next_gp; i++) {
 	    if (cache[i].valid_bit && cache[i].tag == addr_state.tag) {
 	        if (addr_state.block + len > CATCHE_WIDTH) {
-                size_t cur = CATCHE_WIDTH - addr_state.block;
-                memcpy(&ret, cache[i].block + addr_state.block, cur);
-                size_t left = len - cur;
-                for (int j = next_gp; j < next_gp + 8; j++) {
-                    if (cache[j].valid_bit && cache[j].tag == addr_state.tag) {
-                        memcpy((uint8_t*)&ret + cur, cache[j].block, left);
-                        return ret;
-                    }
-                }
+	            memcpy(&ret, hw_mem + paddr, len);
+	            return ret;
+                // size_t cur = CATCHE_WIDTH - addr_state.block;
+                // memcpy(&ret, cache[i].block + addr_state.block, cur);
+                // size_t left = len - cur;
+                // for (int j = next_gp; j < next_gp + 8; j++) {
+                //     if (cache[j].valid_bit && cache[j].tag == addr_state.tag) {
+                //         memcpy((uint8_t*)&ret + cur, cache[j].block, left);
+                //         return ret;
+                //     }
+                // }
+                // break;
 	        }
 	        else {
 	            memcpy(&ret, cache[i].block + addr_state.block, len);
