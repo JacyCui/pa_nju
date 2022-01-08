@@ -32,7 +32,7 @@ void create_video_mapping()
             if (ptable_idx >= (VMEM_ADDR >> 12) && ptable_idx < (VMEM_ADDR >> 12) + NR_P) {
                 ptable->val = make_pte(pframe_idx << 12);
                 pframe_idx++;
-                Log("%d: ptable->frame: 0x%x, ptable->p: %x", ptable_idx, ptable->page_frame, ptable->present);
+                Log("0x%x: ptable->frame: 0x%x, ptable->p: %x", ptable_idx, ptable->page_frame, ptable->present);
             }
 			ptable++;
 		}
