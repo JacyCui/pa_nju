@@ -40,6 +40,7 @@ void create_video_mapping()
 			ptable++;
 		}
 	}
+    Log("pdir = 0x%x, pdir->frame: 0x%x, pdir->p: 0x%x", pdir, pdir->page_frame, pdir->present);
 }
 
 void video_mapping_write_test()
