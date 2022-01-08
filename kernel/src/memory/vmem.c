@@ -26,7 +26,7 @@ void create_video_mapping()
 	uint32_t pdir_idx, ptable_idx, pframe_idx;
 
 	/* fill PDEs and PTEs */
-	pframe_idx = VMEN_ADDR >> 12;
+	pframe_idx = VMEM_ADDR >> 12;
 	for (pdir_idx = 0; pdir_idx < NR_PT; pdir_idx++)
 	{
 		for (ptable_idx = 0; ptable_idx < NR_PTE; ptable_idx++)
