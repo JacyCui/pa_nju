@@ -25,6 +25,7 @@ void create_video_mapping()
     for (uint32_t ptable_idx = 0; ptable_idx < NR_PT; ptable_idx++)
 	{
 		ptable->val = make_pte(pframe_idx << 12);
+        ptable->present = 1;
 		pframe_idx++;
 		ptable++;
 	}
