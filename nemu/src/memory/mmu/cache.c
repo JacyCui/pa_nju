@@ -63,7 +63,8 @@ uint32_t cache_read(paddr_t paddr, size_t len)
                         return ret;
                     }
                 }
-                break;
+                memcpy(&ret, hw_mem + paddr, len);
+                return ret;
 	        }
 	        else {
 	            memcpy(&ret, cache[i].block + addr_state.block, len);
