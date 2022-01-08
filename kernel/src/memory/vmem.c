@@ -33,6 +33,7 @@ void create_video_mapping()
                 ptable->val = make_pte(pframe_idx << 12);
                 pframe_idx++;
             }
+            Log("%d: ptable->frame: 0x%x, ptable->p: %x", ptable_idx, ptable->page_frame, ptable->present);
 			ptable++;
 		}
 	}
