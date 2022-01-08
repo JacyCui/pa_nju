@@ -5,8 +5,11 @@
 #define VMEM_ADDR 0xa0000
 #define SCR_SIZE (320 * 200)
 #define NR_PT ((SCR_SIZE + PT_SIZE - 1) / PT_SIZE) // number of page tables to cover the vmem
+#define NR_P (SCR_SIZE / PAGE_SIZE + 1)
 
 PDE *get_updir();
+
+PTE vptable[NR_PTE * NR_P] align_to_page; // vmem page tables
 
 void create_video_mapping()
 {
@@ -16,18 +19,42 @@ void create_video_mapping()
 	 * [0xa0000, 0xa0000 + SCR_SIZE) for user program. You may define
 	 * some page tables to create this mapping.
 	 */
-    // panic("please implement me");
-    PDE* pdir = get_updir();
-    uint32_t pdir_idx = VMEM_ADDR >> 22;    
-    PTE* ptable = (PTE*)((pdir + pdir_idx)->page_frame << 12);
-    
-    uint32_t pframe_idx = VMEM_ADDR >> 12; 
-    for (uint32_t ptable_idx = 0; ptable_idx < NR_PT; ptable_idx++)
+    panic("please implement me");
+    return;
+	PDE *pdir = get_updir() + (VMEM_ADDR >> 22);
+	PTE *ptable = (PTE *)va_to_pa(vptable);
+	uint32_t pdir_idx, ptable_idx, pframe_idx;
+
+    PTE *pt_original = (PTE *)(pdir->page_frame << 12);
+    Log("pt_original = 0x%x", pt_original);
+    for (int i = 0; i < NR_PTE; i++) {
+        Log("%d: pt_origin->frame = 0x%x, pt->p = %x", i, pt_original[i].page_frame, pt_original[i].present);
+    }
+
+	/* make all PDE invalid */
+	memset(pdir, 0, NR_PT * sizeof(PDE));
+
+	/* fill PDEs and PTEs */
+	pframe_idx = VMEM_ADDR >> 12;
+	for (pdir_idx = 0; pdir_idx < NR_PT; pdir_idx++)
 	{
-		ptable->val = make_pte(pframe_idx << 12);
-        ptable->present = 1;
-		pframe_idx++;
-		ptable++;
+		for (ptable_idx = 0; ptable_idx < NR_PTE; ptable_idx++)
+		{
+            if (ptable_idx < (VMEM_ADDR >> 12) || ptable_idx >= (VMEM_ADDR >> 12) + NR_P) {
+                ptable->val = pt_original->val;
+            }
+            else {
+			    ptable->val = make_pte(pframe_idx << 12);
+			    pframe_idx++;
+            }
+            pt_original++;
+			ptable++;
+		}
+        for (int i = 0; i < NR_PTE; i++) {
+            Log("%d: ptable->frame = 0x%x, pt->p = %x", i, ptable[i].page_frame, ptable[i].present);
+        }
+        pdir[pdir_idx].val = make_pde(ptable);
+		pdir[pdir_idx + KOFFSET / PT_SIZE].val = make_pde(ptable);
 	}
 }
 
