@@ -7,7 +7,7 @@
 #define NR_PT ((SCR_SIZE + PT_SIZE - 1) / PT_SIZE) // number of page tables to cover the vmem
 #define NR_P (SCR_SIZE / PAGE_SIZE + 1) // number of pages to cover the vmem
 
-//PTE vptable[NR_PTE * NR_P] align_to_page; // vmem page tables
+PTE vptable[NR_PTE * NR_P] align_to_page; // vmem page tables
 
 PDE *get_updir();
 
