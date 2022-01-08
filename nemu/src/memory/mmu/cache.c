@@ -46,6 +46,8 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 // read data from cache
 uint32_t cache_read(paddr_t paddr, size_t len)
 {
+    memcpy(&ret, hw_mem + paddr, len);
+    return ret;
     PADDR_STATUS addr_state;
     addr_state.val = paddr;
     uint32_t ret = 0;
@@ -63,8 +65,6 @@ uint32_t cache_read(paddr_t paddr, size_t len)
                         return ret;
                     }
                 }
-                memcpy(&ret, hw_mem + paddr, len);
-                return ret;
 	        }
 	        else {
 	            memcpy(&ret, cache[i].block + addr_state.block, len);
