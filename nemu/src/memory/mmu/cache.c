@@ -2,8 +2,6 @@
 #include "memory/memory.h"
 #include <stdlib.h>
 
-#define PA_4_2
-
 #ifdef CACHE_ENABLED
 
 CacheLine cache[CATCHE_LINES]; // define cache
@@ -48,7 +46,7 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 // read data from cache
 uint32_t cache_read(paddr_t paddr, size_t len)
 {
-#ifdef PA_4_2
+#ifdef HAS_DEVICE_IDE
     uint32_t ret = 0;
     memcpy(&ret, hw_mem + paddr, len);
     return ret;
