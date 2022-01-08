@@ -19,6 +19,7 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 {
     // write through
     memcpy(hw_mem + paddr, &data, len);
+#ifndef HAS_DEVICE_IDE
     // update cache
 	PADDR_STATUS addr_state;
     addr_state.val = paddr;
@@ -41,6 +42,7 @@ void cache_write(paddr_t paddr, size_t len, uint32_t data)
 	        }
 	    }
 	}
+#endif
 }
 
 // read data from cache
