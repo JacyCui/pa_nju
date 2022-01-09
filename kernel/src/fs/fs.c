@@ -39,7 +39,7 @@ int fs_open(const char *pathname, int flags)
 {
 	// panic("Please implement fs_open at fs.c");
     for (int i = 0; i < NR_FILES; i++) {
-        if (strcmp(pathname, file_table[i] == 0) {
+        if (strcmp(pathname, file_table[i]) == 0) {
             files[i + 3].used = 1;
             files[i + 3].offset = 0;
             return i + 3;
@@ -54,7 +54,7 @@ size_t fs_read(int fd, void *buf, size_t len)
 	assert(fd > 2);
 	// panic("Please implement fs_read at fs.c");
     if (files[fd].used) {
-        if (files[i].offset + len > file_table[fd - 3].size) {
+        if (files[fd].offset + len > file_table[fd - 3].size) {
             return 0;
         }
         ide_read(buf, file_table[fd - 3].disk_offset + files[i].offset, len);
