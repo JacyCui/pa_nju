@@ -28,7 +28,7 @@ void create_video_mapping()
         ptable = (PTE *)(pdir->page_frame << 12);
     }
     else {
-        ptable = (PTE*)mm_malloc(pa_to_va(0), NR_PTE);
+        ptable = (PTE*)mm_malloc((uint32_t)pa_to_va(0), NR_PTE);
     }
 
 	uint32_t pframe_idx = VMEM_ADDR >> 12;
