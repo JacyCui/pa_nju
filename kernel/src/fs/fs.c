@@ -57,7 +57,7 @@ size_t fs_read(int fd, void *buf, size_t len)
         if (files[fd].offset + len > file_table[fd - 3].size) {
             return 0;
         }
-        ide_read(buf, file_table[fd - 3].disk_offset + files[i].offset, len);
+        ide_read(buf, file_table[fd - 3].disk_offset + files[fd].offset, len);
         files[i].offset += len;
         return len;
     }
