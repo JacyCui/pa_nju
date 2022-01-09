@@ -22,13 +22,14 @@ void create_video_mapping()
     // panic("please implement me");
 
     PDE *pdir = (PDE *)va_to_pa(get_updir()) + (VMEM_ADDR >> 22);
-    Log("pdir = 0x%x, pdir->frame: 0x%x, pdir->p: 0x%x", pdir, pdir->page_frame, pdir->present);
+    // Log("pdir = 0x%x, pdir->frame: 0x%x, pdir->p: 0x%x", pdir, pdir->page_frame, pdir->present);
     PTE *ptable;
     if (pdir->present) {
         ptable = (PTE *)(pdir->page_frame << 12);
     }
     else {
         ptable = (PTE*)mm_malloc((uint32_t)pa_to_va(0), NR_PTE);
+        Log("here");
     }
 
 	uint32_t pframe_idx = VMEM_ADDR >> 12;
