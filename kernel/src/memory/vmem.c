@@ -23,12 +23,17 @@ void create_video_mapping()
 
     PDE *pdir = (PDE *)va_to_pa(get_updir()) + (VMEM_ADDR >> 22);
     Log("pdir = 0x%x, pdir->frame: 0x%x, pdir->p: 0x%x", pdir, pdir->page_frame, pdir->present);
-    PTE *ptable = (PTE *)(pdir->page_frame << 12);
+    
+    if (pdir->present) {
+        PTE *ptable = (PTE *)(pdir->page_frame << 12);
+    }
+    else {
+        panic("Page Table Missed");
+    }
 
 	uint32_t pframe_idx = VMEM_ADDR >> 12;
 	for (uint32_t pdir_idx = 0; pdir_idx < NR_PT; pdir_idx++)
 	{
-        pdir[pdir_idx].val = make_pde(ptable);
 		for (uint32_t ptable_idx = 0; ptable_idx < NR_PTE; ptable_idx++)
 		{
             if (ptable_idx >= (VMEM_ADDR >> 12) && ptable_idx < (VMEM_ADDR >> 12) + NR_P) {
