@@ -37,14 +37,30 @@ void ide_write(uint8_t *, uint32_t, uint32_t);
 
 int fs_open(const char *pathname, int flags)
 {
-	panic("Please implement fs_open at fs.c");
+	// panic("Please implement fs_open at fs.c");
+    for (int i = 0; i < NR_FILES; i++) {
+        if (strcmp(pathname, file_table[i] == 0) {
+            files[i + 3].used = 1;
+            files[i + 3].offset = 0;
+            return i + 3;
+        }
+    }
+    assert(0);
 	return -1;
 }
 
 size_t fs_read(int fd, void *buf, size_t len)
 {
 	assert(fd > 2);
-	panic("Please implement fs_read at fs.c");
+	// panic("Please implement fs_read at fs.c");
+    if (files[fd].used) {
+        if (files[i].offset + len > file_table[fd - 3].size) {
+            return 0;
+        }
+        ide_read(buf, file_table[fd - 3].disk_offset + files[i].offset, len);
+        files[i].offset += len;
+        return len;
+    }
 	return -1;
 }
 
@@ -69,12 +85,22 @@ size_t fs_write(int fd, void *buf, size_t len)
 
 off_t fs_lseek(int fd, off_t offset, int whence)
 {
-	panic("Please implement fs_lseek at fs.c");
-	return -1;
+	// panic("Please implement fs_lseek at fs.c");
+    switch (whence) {
+        case SEEK_SET: files[fd].offset = offset; break;
+        case SEEK_CUR: files[fd].offset += offset; break;
+        case SEEK_END: files[fd].offset = file_table[fd - 3].size + offset; break; 
+        default: return -1;
+    }
+	return files[fd].offset;
 }
 
 int fs_close(int fd)
 {
-	panic("Please implement fs_close at fs.c");
+	// panic("Please implement fs_close at fs.c");
+    if (files[fd].used) {
+        files[fd].used = 0;
+        return 0;
+    }
 	return -1;
 }
