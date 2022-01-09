@@ -29,7 +29,6 @@ void create_video_mapping()
 	for (uint32_t pdir_idx = 0; pdir_idx < NR_PT; pdir_idx++)
 	{
         // pdir[pdir_idx].val = make_pde(ptable);
-		// pdir[pdir_idx + KOFFSET / PT_SIZE].val = make_pde(ptable);
 		for (uint32_t ptable_idx = 0; ptable_idx < NR_PTE; ptable_idx++)
 		{
             if (ptable_idx >= (VMEM_ADDR >> 12) && ptable_idx < (VMEM_ADDR >> 12) + NR_P) {
