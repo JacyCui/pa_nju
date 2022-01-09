@@ -79,7 +79,7 @@ bool process_keys(void (*key_press_callback)(int), void (*key_release_callback)(
             sti();
             return true;
         }
-        if (key_state[i] = KEY_STATE_RELEASE) {
+        if (key_state[i] == KEY_STATE_RELEASE) {
             key_release_callback(i);
             sti();
             return true;
