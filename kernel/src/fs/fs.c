@@ -39,7 +39,7 @@ int fs_open(const char *pathname, int flags)
 {
 	// panic("Please implement fs_open at fs.c");
     for (int i = 0; i < NR_FILES; i++) {
-        if (strcmp(pathname, file_table[i]) == 0) {
+        if (strcmp(pathname, file_table[i].name) == 0) {
             files[i + 3].used = 1;
             files[i + 3].offset = 0;
             return i + 3;
