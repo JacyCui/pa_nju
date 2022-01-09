@@ -28,19 +28,19 @@ void create_video_mapping()
 	uint32_t pframe_idx = VMEM_ADDR >> 12;
 	for (uint32_t pdir_idx = 0; pdir_idx < NR_PT; pdir_idx++)
 	{
-        pdir[pdir_idx].val = make_pde(ptable);
-		pdir[pdir_idx + KOFFSET / PT_SIZE].val = make_pde(ptable);
+        // pdir[pdir_idx].val = make_pde(ptable);
+		// pdir[pdir_idx + KOFFSET / PT_SIZE].val = make_pde(ptable);
 		for (uint32_t ptable_idx = 0; ptable_idx < NR_PTE; ptable_idx++)
 		{
             if (ptable_idx >= (VMEM_ADDR >> 12) && ptable_idx < (VMEM_ADDR >> 12) + NR_P) {
                 ptable->val = make_pte(pframe_idx << 12);
                 pframe_idx++;
-                Log("0x%x: ptable->frame: 0x%x, ptable->p: %x", ptable_idx, ptable->page_frame, ptable->present);
+                // Log("0x%x: ptable->frame: 0x%x, ptable->p: %x", ptable_idx, ptable->page_frame, ptable->present);
             }
 			ptable++;
 		}
 	}
-    Log("pdir = 0x%x, pdir->frame: 0x%x, pdir->p: 0x%x", pdir, pdir->page_frame, pdir->present);
+    // Log("pdir = 0x%x, pdir->frame: 0x%x, pdir->p: 0x%x", pdir, pdir->page_frame, pdir->present);
 }
 
 void video_mapping_write_test()
