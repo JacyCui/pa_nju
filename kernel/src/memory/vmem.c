@@ -29,7 +29,6 @@ void create_video_mapping()
     }
     else {
         ptable = (PTE*)mm_malloc((uint32_t)pa_to_va(0), NR_PTE);
-        Log("here");
     }
 
 	uint32_t pframe_idx = VMEM_ADDR >> 12;
