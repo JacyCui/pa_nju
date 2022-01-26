@@ -6,7 +6,7 @@ Put the implementations of `pop' instructions here.
 uint32_t pop() {
     // read dest
     opr_dest.type = OPR_MEM;
-    opr_dest.sreg = SREG_DS;
+    opr_dest.sreg = SREG_SS;
     opr_dest.addr = cpu.esp;
     opr_dest.data_size = data_size;
     // fetch dest
